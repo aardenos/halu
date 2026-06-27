@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halu · The Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inconsolata:wght@300;400;500&family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040302;--s0:#080706;--s1:#0c0a07;--s2:#121008;--s3:#181510;
+  --gold:#c9a84c;--gold2:#e8c97a;--gold3:#a07830;--gold4:#604818;--gold5:#281404;
+  --ember:#d4703a;--teal:#3a8a7a;--teal2:#5abaa8;--teal3:#2a6a5a;
+  --violet:#6a4a98;--violet2:#9878c8;--violet3:#c8a8f8;
+  --green:#5a8848;--green2:#98b878;
+  --rose:#b87070;--rose2:#d89888;
+  --text:#ddd0b8;--mute:#907858;--dim:#504030;--darker:#281808;
+  --rule:#140e04;--rule2:#221408;--rule3:#321c08;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Cormorant',serif;
+  font-size:17px;line-height:1.92;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 20% 15%,rgba(201,168,76,.022) 0%,transparent 52%),
+    radial-gradient(ellipse at 80% 88%,rgba(106,74,152,.016) 0%,transparent 52%)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.55rem 1.8rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(4,3,2,.97);backdrop-filter:blur(30px);border-bottom:1px solid var(--rule2)}
+.nl{font-family:'Cinzel Decorative',serif;font-size:.78rem;color:var(--gold);letter-spacing:.18em}
+.links{display:flex;gap:.6rem;list-style:none;flex-wrap:wrap}
+.links a{font-family:'Inconsolata',monospace;font-size:.49rem;letter-spacing:.15em;
+  color:var(--dim);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.links a:hover{color:var(--gold)}
+
+/* LAYOUT */
+.wrap{max-width:960px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+.section{padding:5rem 0 3.5rem;border-bottom:1px solid var(--rule)}
+.section:last-child{border-bottom:none;padding-bottom:8rem}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:6rem 2rem 4rem;
+  border-bottom:1px solid var(--rule2);position:relative;overflow:hidden}
+.hero-wm{position:absolute;font-family:'Cinzel Decorative',serif;font-size:36vw;
+  font-weight:700;color:var(--gold);opacity:.055;top:50%;left:50%;
+  transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;
+  letter-spacing:.02em;text-shadow:0 0 400px rgba(201,168,76,.18)}
+.hero-eye{font-family:'Inconsolata',monospace;font-size:.55rem;letter-spacing:.75em;
+  color:var(--gold5);text-transform:uppercase;margin-bottom:2.8rem;
+  animation:rise 2s ease both;opacity:.85}
+.hero-halu{font-family:'Cinzel',serif;font-size:clamp(1.1rem,2.8vw,1.9rem);
+  color:var(--gold2);letter-spacing:.12em;line-height:1.75;
+  text-shadow:0 0 80px rgba(201,168,76,.18);
+  animation:rise 1.4s cubic-bezier(.16,1,.3,1) both;margin-bottom:.9rem}
+.hero-en{font-style:italic;font-size:clamp(.88rem,1.8vw,1.05rem);color:var(--mute);
+  line-height:2.2;animation:rise 2.4s ease both;max-width:560px}
+.hero-rule{width:110px;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold4),transparent);
+  margin:2rem auto;animation:rise 3s ease both}
+.hero-sub{font-family:'Inconsolata',monospace;font-size:.52rem;letter-spacing:.5em;
+  color:var(--gold5);text-transform:uppercase;animation:rise 3.5s ease both;opacity:.7}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEADINGS */
+.hl{margin-bottom:2rem}
+.hl-halu{font-family:'Cinzel Decorative',serif;font-size:1.45rem;color:var(--gold);
+  letter-spacing:.07em;display:block;margin-bottom:.22rem}
+.hl-en{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--gold4);display:block;margin-bottom:.1rem}
+.hl-root{font-family:'Inconsolata',monospace;font-size:.5rem;color:var(--dim);
+  letter-spacing:.14em;display:block;font-style:italic}
+.hl-rule{height:1px;background:linear-gradient(to right,var(--gold4),transparent);margin-top:.55rem}
+
+.sec-num{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.45em;
+  color:var(--gold4);text-transform:uppercase;display:block;margin-bottom:.5rem;opacity:.8}
+h4{font-family:'Inconsolata',monospace;font-size:.62rem;letter-spacing:.22em;
+  color:var(--gold3);text-transform:uppercase;margin:2.5rem 0 .85rem}
+h5{font-family:'Inconsolata',monospace;font-size:.57rem;letter-spacing:.18em;
+  color:var(--gold4);text-transform:uppercase;margin:1.8rem 0 .6rem}
+
+/* PROSE */
+p{margin-bottom:1.05rem}
+.prose{font-size:1rem;max-width:840px}
+em{color:var(--gold2);font-style:italic}
+strong{color:var(--gold);font-weight:600}
+code{font-family:'Inconsolata',monospace;font-size:.82em;color:var(--teal2);
+  background:rgba(58,138,122,.1);padding:.1em .4em}
+.pull{border-left:2px solid var(--gold4);padding:.9rem 0 .9rem 1.8rem;
+  margin:2rem 0;font-style:italic;font-size:1.02rem;color:var(--gold2);line-height:2.1}
+.ornament{text-align:center;color:var(--gold4);font-size:1rem;letter-spacing:1.2em;
+  margin:2.5rem 0;display:block;opacity:.45}
+.intro-drop>p:first-child::first-letter{
+  font-family:'Cinzel Decorative',serif;font-size:3.8rem;font-weight:700;color:var(--gold);
+  float:left;line-height:.85;margin:.15em .2em 0 0;padding:.08em .14em;
+  border:1px solid var(--gold4);background:var(--s1)}
+
+/* YIN/YANG AXIS */
+.axis{display:grid;grid-template-columns:1fr auto 1fr;gap:0;margin:2rem 0}
+.ax-yang{background:#05100a;border:1px solid rgba(90,138,72,.2);
+  border-right:none;padding:1.4rem 1.6rem}
+.ax-centre{background:var(--s1);border-top:1px solid var(--rule2);
+  border-bottom:1px solid var(--rule2);padding:1.4rem .5rem;
+  display:flex;align-items:center;justify-content:center}
+.ax-yin{background:#100508;border:1px solid rgba(184,112,112,.18);
+  border-left:none;padding:1.4rem 1.6rem}
+.ax-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;
+  text-transform:uppercase;display:block;margin-bottom:.5rem}
+.ax-yang .ax-label{color:var(--teal2)}
+.ax-yin .ax-label{color:var(--rose)}
+.ax-word{font-family:'Cinzel Decorative',serif;font-size:1.3rem;
+  display:block;margin-bottom:.25rem}
+.ax-yang .ax-word{color:var(--teal2)}
+.ax-yin .ax-word{color:var(--rose)}
+.ax-def{font-size:.82rem;color:var(--dim);line-height:1.7}
+.ax-centre-text{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--dim);writing-mode:vertical-rl;
+  text-align:center}
+
+/* TIER OVERVIEW CARDS */
+.tier-overview{display:flex;flex-direction:column;gap:1px;background:var(--rule);margin:1.5rem 0}
+.to-card{display:grid;grid-template-columns:2.6rem 1fr;background:var(--s1)}
+.to-num{font-family:'Cinzel Decorative',serif;font-size:1.6rem;font-weight:700;
+  padding:.8rem .6rem;text-align:center;line-height:1.2}
+.to-1 .to-num{color:var(--gold3)}.to-2 .to-num{color:var(--teal2)}
+.to-3 .to-num{color:var(--green2)}.to-4 .to-num{color:var(--ember)}
+.to-5 .to-num{color:var(--violet3)}
+.to-body{padding:.75rem 1rem .75rem 0;border-left:1px solid var(--rule)}
+.to-title{font-family:'Inconsolata',monospace;font-size:.82rem;display:block;margin-bottom:.1rem}
+.to-1 .to-title{color:var(--gold3)}.to-2 .to-title{color:var(--teal2)}
+.to-3 .to-title{color:var(--green2)}.to-4 .to-title{color:var(--ember)}
+.to-5 .to-title{color:var(--violet3)}
+.to-desc{font-size:.82rem;color:var(--mute);line-height:1.6}
+
+/* SCRIPTURE */
+.scripture{background:var(--s0);border:1px solid var(--rule2);
+  padding:1.5rem 2rem;margin:1.8rem 0;position:relative}
+.scripture::before{content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;background:linear-gradient(to right,var(--gold5),var(--gold4),var(--gold5))}
+.scr-halu{font-family:'Cinzel',serif;font-size:1.02rem;color:var(--gold2);
+  display:block;line-height:2;margin-bottom:.55rem;letter-spacing:.04em}
+.scr-en{font-style:italic;font-size:.93rem;color:var(--mute);
+  display:block;line-height:1.92;margin-bottom:.5rem}
+.scr-src{font-family:'Inconsolata',monospace;font-size:.54rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+
+/* QUOTE */
+.q{background:var(--s0);border-left:2px solid var(--gold4);
+  padding:.95rem 1.5rem;margin:1.5rem 0;position:relative;overflow:hidden}
+.q::before{content:'\201C';position:absolute;top:-.3rem;right:1rem;
+  font-size:2.8rem;color:var(--gold5);font-family:'Cinzel Decorative',serif;line-height:1}
+.qt{font-style:italic;font-size:.94rem;color:var(--gold2);
+  line-height:2;display:block;margin-bottom:.38rem}
+.qs{font-family:'Inconsolata',monospace;font-size:.54rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+
+/* TIER SECTIONS */
+.tier-band{display:grid;grid-template-columns:4rem 1fr;margin-bottom:2rem;
+  padding-bottom:1.8rem;border-bottom:1px solid var(--rule)}
+.t-num{font-family:'Cinzel Decorative',serif;font-size:3rem;font-weight:700;
+  line-height:1;padding-top:.15rem}
+.t-1 .t-num{color:var(--gold3)}.t-2 .t-num{color:var(--teal2)}
+.t-3 .t-num{color:var(--green2)}.t-4 .t-num{color:var(--ember)}
+.t-5 .t-num{color:var(--violet3)}
+.t-head-title{font-family:'Inconsolata',monospace;font-size:1rem;
+  font-weight:500;display:block;margin-bottom:.2rem}
+.t-head-name{font-family:'Cinzel',serif;font-size:1.08rem;
+  font-weight:600;display:block;margin-bottom:.25rem}
+.t-head-sub{font-family:'Inconsolata',monospace;font-size:.56rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.t-1 .t-head-title,.t-1 .t-head-name{color:var(--gold3)}
+.t-2 .t-head-title,.t-2 .t-head-name{color:var(--teal2)}
+.t-3 .t-head-title,.t-3 .t-head-name{color:var(--green2)}
+.t-4 .t-head-title,.t-4 .t-head-name{color:var(--ember)}
+.t-5 .t-head-title,.t-5 .t-head-name{color:var(--violet3)}
+
+.real{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);margin-top:1.5rem;display:block;
+  padding-top:1rem;border-top:1px solid var(--rule)}
+.real span{font-style:italic;text-transform:none;letter-spacing:0;
+  font-family:'Cormorant',serif;font-size:1.02rem;color:var(--mute)}
+
+.sound-box{background:var(--s1);border:1px solid var(--rule2);
+  padding:.85rem 1.1rem;margin:1.1rem 0}
+.sb-head{font-family:'Inconsolata',monospace;font-size:.52rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold4);
+  display:block;margin-bottom:.55rem}
+.sb-item{display:flex;gap:.8rem;align-items:baseline;margin-bottom:.3rem;font-size:.84rem}
+.sb-sym{font-family:'Inconsolata',monospace;color:var(--teal2);min-width:3.5rem;font-weight:500}
+.sb-desc{color:var(--mute)}
+
+/* TABLES */
+.t{width:100%;border-collapse:collapse;font-size:.83rem;margin:1.2rem 0}
+.t th{font-family:'Inconsolata',monospace;font-size:.52rem;letter-spacing:.18em;
+  color:var(--gold4);text-transform:uppercase;padding:.48rem .75rem;
+  border-bottom:1px solid var(--rule2);text-align:left}
+.t td{padding:.42rem .75rem;border-bottom:1px solid var(--rule);vertical-align:top}
+.t tr:hover td{background:rgba(201,168,76,.02)}
+.sy{font-family:'Inconsolata',monospace;font-weight:500;font-size:.87rem}
+.vl{font-family:'Inconsolata',monospace;color:var(--gold4);font-size:.68rem}
+.df{color:var(--mute);font-style:italic;font-size:.82rem}
+
+/* DARK BOX */
+.dbox{background:var(--s0);border:1px solid var(--rule2);
+  padding:1.4rem 1.8rem;margin:1.3rem 0;position:relative}
+.dbox::before{content:'';position:absolute;inset:5px;
+  border:1px solid rgba(201,168,76,.04);pointer-events:none}
+.dbox-lbl{font-family:'Inconsolata',monospace;font-size:.5rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold4);margin-bottom:.85rem;display:block}
+.dbox-code{font-family:'Inconsolata',monospace;font-size:.84rem;
+  color:var(--gold2);line-height:2.25}
+.dbox-dim{color:var(--dim);font-size:.74rem;display:block;margin-top:.1rem}
+
+/* RULE BOX */
+.rb{background:var(--s1);border:1px solid var(--rule3);
+  border-left:3px solid var(--gold3);padding:1.1rem 1.4rem;margin:1.3rem 0}
+.rb-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold3);display:block;margin-bottom:.55rem}
+.rb-body{font-size:.9rem;line-height:1.9}
+
+/* PERIODIC TABLE */
+.ptable-scroll{overflow-x:auto;margin:1.4rem 0}
+.ptable{display:grid;grid-template-columns:auto repeat(5,1fr);gap:2px;
+  background:var(--rule);min-width:660px;font-family:'Inconsolata',monospace}
+.pt-corner{background:var(--bg)}
+.pt-vh{background:var(--s1);padding:.5rem .26rem;text-align:center}
+.vd{font-size:.41rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--dim);display:block;margin-bottom:.14rem}
+.vv{font-size:1.08rem;font-weight:700;display:block;line-height:1}
+.vs{font-size:.41rem;font-style:italic;color:var(--dim);display:block;margin-top:.13rem}
+.vgeo{font-size:.38rem;color:var(--dim);display:block;margin-top:.05rem;opacity:.65}
+.vh-a .vv{color:var(--gold)}.vh-e .vv{color:var(--ember)}
+.vh-i .vv{color:var(--teal2)}.vh-o .vv{color:var(--green2)}.vh-u .vv{color:var(--violet3)}
+.pt-rl{background:var(--s1);padding:.44rem .58rem;display:flex;flex-direction:column;
+  justify-content:center;gap:.07rem;min-width:84px}
+.pt-rl .rg{font-size:.39rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);display:block}
+.pt-rl .rc{font-size:.98rem;font-weight:700;display:block}
+.pt-rl .rm{font-size:.44rem;color:var(--dim);font-style:italic;line-height:1.3;display:block}
+.pt-rl .rp{font-size:.4rem;color:var(--dim);display:block;opacity:.65}
+.struct .rc{color:var(--gold)}
+.exp .rc{color:var(--teal2)}.con .rc{color:var(--rose)}
+.pt-cell{padding:.38rem .24rem;text-align:center;transition:background .12s}
+.pt-cell:hover{z-index:2}
+.pt-sc{padding:.38rem .24rem;text-align:center;
+  background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.1)}
+.pt-cell .sy,.pt-sc .sy{font-size:.86rem;font-weight:500;display:block}
+.pt-cell .vl,.pt-sc .vl{font-size:.41rem;color:var(--dim);display:block;margin:.03rem 0}
+.pt-cell .df,.pt-sc .df{font-size:.4rem;color:var(--dim);
+  font-style:italic;display:block;line-height:1.22}
+.r-exp .pt-cell{background:#050d0a}
+.r-con .pt-cell{background:#0d0505}
+.r-struct .pt-sc{background:#0d0c08}
+.cv-a .sy{color:var(--gold)}.cv-e .sy{color:var(--ember)}
+.cv-i .sy{color:var(--teal2)}.cv-o .sy{color:var(--green2)}.cv-u .sy{color:var(--violet3)}
+
+/* VOWEL STATE ROW */
+.vstates{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;
+  background:var(--rule);margin:1.4rem 0}
+.vs-card{padding:1rem .7rem;text-align:center}
+.vs-a{background:#0c0a06}.vs-e{background:#0e0806}
+.vs-i{background:#060c0c}.vs-o{background:#080c08}.vs-u{background:#0a0810}
+.vs-lbl{font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.26em;
+  text-transform:uppercase;display:block;margin-bottom:.4rem}
+.vs-v{font-family:'Cinzel Decorative',serif;font-size:1.9rem;font-weight:700;
+  display:block;line-height:1;margin-bottom:.16rem}
+.vs-word{font-family:'Inconsolata',monospace;font-size:.8rem;display:block;margin-bottom:.16rem}
+.vs-en{font-size:.7rem;font-style:italic;color:var(--mute);display:block;margin-bottom:.26rem}
+.vs-det{font-family:'Inconsolata',monospace;font-size:.49rem;
+  color:var(--dim);display:block;line-height:1.72;text-align:left}
+.vs-geo{font-size:.6rem;color:var(--dim);font-style:italic;display:block;
+  margin-top:.35rem;padding-top:.35rem;border-top:1px solid var(--rule2)}
+.vs-a .vs-lbl,.vs-a .vs-v,.vs-a .vs-word{color:var(--gold)}
+.vs-e .vs-lbl,.vs-e .vs-v,.vs-e .vs-word{color:var(--ember)}
+.vs-i .vs-lbl,.vs-i .vs-v,.vs-i .vs-word{color:var(--teal2)}
+.vs-o .vs-lbl,.vs-o .vs-v,.vs-o .vs-word{color:var(--green2)}
+.vs-u .vs-lbl,.vs-u .vs-v,.vs-u .vs-word{color:var(--violet3)}
+
+/* PHASE TABLE */
+.phase-t{width:100%;border-collapse:collapse;margin:1.1rem 0;font-size:.82rem}
+.phase-t th{font-family:'Inconsolata',monospace;font-size:.51rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold4);padding:.48rem .75rem;
+  border-bottom:1px solid var(--rule2);text-align:left}
+.phase-t td{padding:.42rem .75rem;border-bottom:1px solid var(--rule);vertical-align:top}
+.ph-a td:first-child{color:var(--gold)}.ph-e td:first-child{color:var(--ember)}
+.ph-i td:first-child{color:var(--teal2)}.ph-o td:first-child{color:var(--green2)}
+.ph-u td:first-child{color:var(--violet3)}
+
+/* PUNCT GRID */
+.punct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:1px;background:var(--rule);margin:1.1rem 0}
+.pc{background:var(--s1);padding:.7rem .8rem;transition:background .12s}
+.pc:hover{background:var(--s2)}
+.pc-sym{font-family:'Inconsolata',monospace;font-size:1.15rem;color:var(--gold2);
+  display:block;margin-bottom:.08rem}
+.pc-name{font-family:'Inconsolata',monospace;font-size:.8rem;color:var(--teal2);
+  display:block;margin-bottom:.08rem}
+.pc-en{font-size:.73rem;color:var(--gold);display:block;margin-bottom:.08rem}
+.pc-root{font-family:'Inconsolata',monospace;font-size:.53rem;
+  color:var(--dim);display:block;line-height:1.45}
+
+/* AERON */
+.aeron-u{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  background:var(--rule);margin:1.2rem 0}
+.au{background:var(--s1);padding:.8rem .68rem;text-align:center}
+.au-w{font-family:'Inconsolata',monospace;font-size:.9rem;color:var(--teal2);
+  display:block;margin-bottom:.12rem}
+.au-d{font-size:.68rem;font-style:italic;color:var(--mute);display:block;margin-bottom:.12rem}
+.au-v{font-family:'Inconsolata',monospace;font-size:.49rem;
+  color:var(--dim);display:block;line-height:1.58}
+.months{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+  background:var(--rule);margin:1.1rem 0}
+.mc{background:var(--s2);padding:.56rem .44rem;text-align:center}
+.mc-n{font-family:'Inconsolata',monospace;font-size:.49rem;color:var(--dim);display:block}
+.mc-w{font-family:'Inconsolata',monospace;font-size:.78rem;color:var(--gold3);display:block}
+.mc-c{font-size:.57rem;color:var(--dim);font-style:italic;
+  display:block;margin-top:.09rem;line-height:1.3}
+.mc-oph{background:#0e0818}.mc-oph .mc-w{color:var(--violet2)}
+
+/* DICTIONARY */
+.dict-search{width:100%;background:var(--s1);border:1px solid var(--rule2);
+  color:var(--text);font-family:'Inconsolata',monospace;font-size:.86rem;
+  padding:.65rem 1rem;outline:none;margin-bottom:.85rem;letter-spacing:.05em}
+.dict-search::placeholder{color:var(--dim)}
+.dict-search:focus{border-color:var(--gold4)}
+.df-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.dfb{font-family:'Inconsolata',monospace;font-size:.49rem;letter-spacing:.15em;
+  text-transform:uppercase;padding:.3rem .65rem;border:1px solid var(--rule2);
+  background:var(--s1);color:var(--dim);cursor:pointer;transition:all .18s}
+.dfb:hover,.dfb.on{border-color:var(--gold4);color:var(--gold2)}
+.dict-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));
+  gap:1px;background:var(--rule)}
+.de{background:var(--s1);padding:.68rem .82rem;transition:background .12s}
+.de:hover{background:var(--s2)}
+.de-hl{font-family:'Inconsolata',monospace;font-size:.88rem;font-weight:500;
+  display:block;margin-bottom:.09rem}
+.de-en{font-size:.74rem;color:var(--gold);display:block;margin-bottom:.09rem}
+.de-root{font-family:'Inconsolata',monospace;font-size:.53rem;
+  color:var(--dim);display:block;line-height:1.43}
+.de-enc{font-family:'Inconsolata',monospace;font-size:.46rem;
+  color:var(--dim);opacity:.55;display:block;margin-top:.12rem}
+.de-a .de-hl{color:var(--gold3)}.de-e .de-hl{color:var(--ember)}
+.de-i .de-hl{color:var(--teal2)}.de-o .de-hl{color:var(--green2)}
+.de-u .de-hl{color:var(--violet3)}
+.dict-count{font-family:'Inconsolata',monospace;font-size:.52rem;
+  color:var(--dim);margin-top:.55rem;display:block;text-align:right}
+
+/* PROOF */
+.proof{background:var(--s0);border:1px solid var(--rule2);
+  padding:1.3rem 1.8rem;margin:1.3rem 0;position:relative}
+.proof::before{content:'';position:absolute;top:0;left:0;
+  width:3px;height:100%;background:var(--gold4)}
+.proof-lbl{font-family:'Inconsolata',monospace;font-size:.5rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold4);
+  margin-bottom:.72rem;display:block}
+.proof-body{font-size:.88rem;line-height:2}
+
+footer{padding:3rem 2rem;text-align:center;border-top:1px solid var(--rule2)}
+footer p{font-family:'Inconsolata',monospace;font-size:.52rem;letter-spacing:.3em;
+  color:var(--dim);text-transform:uppercase;margin-bottom:.38rem;opacity:.55}
+
+@media(max-width:700px){
+  .links{display:none}
+  .vstates{grid-template-columns:1fr 1fr}
+  .axis{grid-template-columns:1fr;grid-template-rows:1fr auto 1fr}
+  .ax-centre{writing-mode:horizontal-tb;padding:.6rem 1rem}
+  .tier-band{grid-template-columns:3rem 1fr}
+  .aeron-u{grid-template-columns:1fr 1fr}
+  .months{grid-template-columns:1fr 1fr}
+  .punct-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nl">HALU</span>
+  <ul class="links">
+    <li><a href="#intro">The Ground</a></li>
+    <li><a href="#s1">1 · Solid</a></li>
+    <li><a href="#s2">2 · Liquid</a></li>
+    <li><a href="#s3">3 · Gas</a></li>
+    <li><a href="#s4">4 · Plasma</a></li>
+    <li><a href="#s5">5 · Aether</a></li>
+    <li><a href="#a1">Table</a></li>
+    <li><a href="#a2">Grammar</a></li>
+    <li><a href="#a3">Words</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-wm">HALU</div>
+  <div style="position:relative;z-index:1">
+    <div class="hero-eye">The Foundation &middot; From First Principles &middot; &AElig;ron 2031</div>
+    <div class="hero-halu">pagi pe wiki lobasu li ga silo-si</div>
+    <div class="hero-en">True knowing begins when the warmth of faith<br>exceeds the sensing of evidence.</div>
+    <div class="hero-rule"></div>
+    <div class="hero-sub">The Periodic Table of Human Sound</div>
+  </div>
+</section>
+
+<div style="padding-top:66px">
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════════
+  INTRO — THE GROUND BEFORE THE FIRST WORD
+     (not numbered)
+════════════════════════════════════════════ -->
+<section class="section" id="intro">
+<div class="hl">
+  <span class="hl-halu">Gigobiloma</span>
+  <span class="hl-en">I See You — The Ground Before the First Word</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="intro-drop prose">
+<p>Two forces organise all of reality. Not two enemies — two poles of the same engine. The battery needs both terminals. The heart needs both the contraction that pushes and the expansion that receives. Remove either and the system dies. Every tradition that has looked carefully at this has given the poles different names — yin and yang, masculine and feminine, the Hermetic principle of Gender, love and fear — but the observation is always the same: reality is driven by the dynamic between two complementary forces, neither superior, neither complete without the other.</p>
+
+<p>In the language of biology, these poles are the sympathetic nervous system (contraction — the body protecting itself, closing, sharpening) and the parasympathetic (expansion — the body connecting, opening, resting into relationship). In physics, they are emission and return. In consciousness, they are what every language has always encoded in its most basic distinction: the voiceless consonant, produced with the vocal cords at rest, precise and contained; and the voiced consonant, produced with the vocal cords vibrating, open and resonant. The love-pole is not love as sentiment. The fear-pole is not fear as weakness. They are the software and hardware of life — one gives direction, the other gives form.</p>
+
+<p>Halu is built on this engine at the level of its atoms. Every voiced consonant in the language — b, d, g, v, z, j — is the expansion pole. Every voiceless consonant — p, t, k, f, s, c — is the contraction pole. This was not designed into the language. It was found there, already present in the physics of how the human mouth produces sound. What makes Halu different from every language that came before it is that this structure is made explicit, derived, and consistent at every level — from the individual phoneme to the longest possible compound word.</p>
+
+<p>The language is organised around a periodic table of 60 base syllables: the intersection of 12 consonants and 5 vowels, each position carrying a specific force of meaning determined by where and how it is produced in the human body. The 60 syllables double as a base-60 number system — every word has a unique numeric value derived directly from its syllables' positions in the table, making every Halu sentence simultaneously a sequence of sounds, a sequence of integers, and a deterministic geometric standing-wave pattern in matter. The Æron calendar that accompanies the language derives its pulse unit from the tropical year divided by exactly 364, producing 13 months of 28 days each, zero accumulated drift by construction. Language and time share the same ground.</p>
+</div>
+
+<span class="ornament">&middot; &middot; &middot;</span>
+
+<h4>The Five Tiers — What to Expect</h4>
+<div class="prose" style="margin-bottom:1.2rem">
+<p>The language unfolds across five tiers, each corresponding to a state of matter and a deepening of what reality is understood to be. What is learned at each tier is not discarded at the next — it is the foundation the next tier stands on.</p>
+</div>
+
+<div class="tier-overview">
+  <div class="to-card to-1">
+    <div class="to-num">1</div>
+    <div class="to-body">
+      <span class="to-title">Tate · Solid · Earth</span>
+      <div class="to-desc">Sixty syllables. The physical world: body, elements, numbers, time, kinship, basic action. The law of cause and effect as a lived discipline. The realisation that you are the cause of your situation — and that this is not a burden but a ground.</div>
+    </div>
+  </div>
+  <div class="to-card to-2">
+    <div class="to-num">2</div>
+    <div class="to-body">
+      <span class="to-title">Tala · Liquid · Water</span>
+      <div class="to-desc">A new vowel (y) and consonant (w) expand the vocabulary of relationship and potential. The inner world becomes readable. The practitioner develops the capacity to sense gradients — of truth, of emotional weight — before they can be named.</div>
+    </div>
+  </div>
+  <div class="to-card to-3">
+    <div class="to-num">3</div>
+    <div class="to-body">
+      <span class="to-title">Tatu · Gas · Air</span>
+      <div class="to-desc">A seventh vowel (æ) and the approximate r enter. The Æron calendar is fully understood here as part of physical system mastery. The social-creative field: the understanding that consciousness creates, and that every act of creation requires both a generating and a receiving form.</div>
+    </div>
+  </div>
+  <div class="to-card to-4">
+    <div class="to-num">4</div>
+    <div class="to-body">
+      <span class="to-title">Talo · Plasma · Fire</span>
+      <div class="to-desc">No new symbols, but the approximate r of Tier 3 matures into the full sustained alveolar trill — the Principle of Vibration made audible in the mouth. The complete table: 14 consonants × 7 vowels = 98 syllables. The numeric substrate of the language becomes audible. The boundary between the self and the field begins to dissolve. The practitioner either deepens the lower tiers or enters the crucible. Nothing forces this.</div>
+    </div>
+  </div>
+  <div class="to-card to-5">
+    <div class="to-num">5</div>
+    <div class="to-body">
+      <span class="to-title">Tagu · Aether · Spirit</span>
+      <div class="to-desc">No new sounds — the 98-syllable table is complete and is only heard more deeply now. Matter understood as the child of language. The practitioner becomes a receiver that has cleared its own static: profoundly aware, full of gratitude, glad to be of service, understanding "one" for the first time in its fullest meaning.</div>
+    </div>
+  </div>
+</div>
+
+<div class="prose">
+<p>No tier is superior in value to another. Each is necessary ground for the next. What is understood at Tier 1 cannot be unfocused once it is seen — the understanding transcends the reader in the same way that knowing the sky is blue cannot be unknowed. What follows across the five sections is the language itself: its sounds, its grammar, its words, and the understanding of reality that deepens at each level of engagement.</p>
+</div>
+
+<div class="scripture">
+  <span class="scr-halu">pe basa ha · pagi su · lema pagi su ke gada-su</span>
+  <span class="scr-en">"In the beginning was the Word, and the Word was with God, and the Word was God. All things were made through him; and without him was not anything made that was made."</span>
+  <span class="scr-src">Gospel of John &middot; 1:1–3 &middot; The logos as the creative principle preceding matter</span>
+</div>
+
+<div class="scripture">
+  <span class="scr-halu">ku-gada · pe hada-su · pagi ki gado-po ko</span>
+  <span class="scr-en">"And He taught Adam the names of all things."</span>
+  <span class="scr-src">Quran &middot; Surah Al-Baqarah 2:31 &middot; The primordial act of naming as creative power</span>
+</div>
+
+<div class="scripture">
+  <span class="scr-halu">fa lo · basa da · lema gi ko di ko</span>
+  <span class="scr-en">"Split a piece of wood, and I am there. Lift up the stone, and you will find me there."</span>
+  <span class="scr-src">Gospel of Thomas &middot; Saying 77 &middot; Nag Hammadi Library</span>
+</div>
+
+<div class="q">
+  <span class="qt">The Tao that can be told is not the eternal Tao. The name that can be named is not the eternal name. The nameless is the beginning of heaven and earth. The named is the mother of ten thousand things.</span>
+  <span class="qs">Lao Tzu &middot; Tao Te Ching &middot; Chapter 1</span>
+</div>
+
+<div class="q">
+  <span class="qt">THE ALL is MIND; The Universe is Mental.</span>
+  <span class="qs">The Kybalion &middot; The Principle of Mentalism &middot; The Three Initiates &middot; 1908</span>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  SECTION 1 — TIER 1 · SOLID
+════════════════════════════════════════════ -->
+<section class="section" id="s1">
+<span class="sec-num">Section 1</span>
+<div class="hl">
+  <span class="hl-halu">Tate · Basa</span>
+  <span class="hl-en">The Beat · Solid Ground — Tier 1</span>
+  <span class="hl-root">tate = the beat ≈ 1 heartbeat · basa = earth · Cause &amp; Effect · 60 syllables</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="tier-band t-1">
+  <div class="t-num">1</div>
+  <div>
+    <span class="t-head-title">Tate · tala-pe</span>
+    <span class="t-head-name">The Solid State — What Is Real Is What Can Be Located</span>
+    <span class="t-head-sub">Hermetic law: Cause &amp; Effect &middot; Platonic solid: Cube (6 faces) &middot; 12 consonants &times; 5 vowels = 60 syllables</span>
+  </div>
+</div>
+
+<div class="prose">
+<p>The first tier is the ground — not a rung to climb past but the substrate everything else rests on. Reality at this level is solid: bounded, locatable, undeniable. A stone is here and not somewhere else. A body occupies space. An action has a consequence. These are not philosophical propositions. They are the physical conditions of existence, and the practitioner at this tier has accepted them without reservation.</p>
+
+<p>The law of Cause and Effect is the governing principle here — not as a spiritual concept but as the most practical discipline available. Every condition you inhabit is the crystallised consequence of prior actions: yours, and those of the people and forces that preceded you. Accepting this fully — without resentment about what you did not choose and without grandiosity about what you did — is the entire work of Tier 1. It sounds simple. Most people spend their lives avoiding it.</p>
+
+<p>The vocabulary of Tier 1 is the vocabulary of the physical world: the body and its parts, the five elements, the names of things, basic actions, numbers, time units, kinship, and the most fundamental emotions as physical states — not as inner explorations (that is Tier 2's work) but as sensations in the body. Anger felt as heat in the chest. Grief felt as weight. Joy felt as lightness. The body knows before the mind names.</p>
+
+<p>At Tier 1, every sentence is spoken from the physical register by default — the <em>a</em>-vowel domain: the widest mouth opening, the most locatable sound, the sound every human infant in every language makes first. You do not need to declare this register. It is the ground state. Everything else is a departure from it that must be explicitly marked.</p>
+</div>
+
+<div class="axis">
+  <div class="ax-yang">
+    <span class="ax-label">Expansion · Love-pole · Voiced</span>
+    <span class="ax-word">gilo</span>
+    <div class="ax-def">Vocal cords vibrating. Body open and resonant. The force that connects, creates, and gives. Voiced consonants: b · d · g · v · z · j. All derivatives of love: joy, warmth, gratitude, hope, courage, compassion.</div>
+  </div>
+  <div class="ax-centre">
+    <span class="ax-centre-text">the pulse of life</span>
+  </div>
+  <div class="ax-yin">
+    <span class="ax-label">Contraction · Fear-pole · Voiceless</span>
+    <span class="ax-word">sigebu</span>
+    <div class="ax-def">Vocal cords at rest. Body precise and contained. The force that protects, forms, and defines boundaries. Voiceless consonants: p · t · k · f · s · c. All derivatives of fear: anger, shame, anxiety, jealousy, grief, disgust.</div>
+  </div>
+</div>
+
+<div class="prose">
+<p>This distinction — voiced as expansion, voiceless as contraction — is not assigned to the language. It is found in the phonology of human sound production and named. Every language uses both kinds of consonants because every consciousness navigates both poles. Halu makes the navigation explicit.</p>
+</div>
+
+<div class="sound-box">
+  <span class="sb-head">Tier 1 Sound Inventory</span>
+  <div class="sb-item"><span class="sb-sym">12 lexical</span><span class="sb-desc">p b t d k g f v s z c j — content words, all vocabulary</span></div>
+  <div class="sb-item"><span class="sb-sym">4 structural</span><span class="sb-desc">m n l h — grammar particles, evidentials, the primal sounds</span></div>
+  <div class="sb-item"><span class="sb-sym">5 vowels</span><span class="sb-desc">a e i o u — in energy order, mouth open to closed</span></div>
+  <div class="sb-item"><span class="sb-sym">60 syllables</span><span class="sb-desc">12 × 5 = 60 · the base-60 system · complete foundation</span></div>
+</div>
+
+<h4>The Vowels of Tier 1 — Five States of Matter</h4>
+<div class="vstates">
+  <div class="vs-card vs-a">
+    <span class="vs-lbl">Solid · Earth</span><span class="vs-v">a</span>
+    <span class="vs-word">basa · gada</span><span class="vs-en">Physical · Tangible</span>
+    <span class="vs-det">widest mouth<br>maximum density<br>point at it: always<br>Cause &amp; Effect</span>
+    <span class="vs-geo">Cube · 6 faces · Plato Timaeus 56b</span>
+  </div>
+  <div class="vs-card vs-e">
+    <span class="vs-lbl">Plasma · Fire</span><span class="vs-v">e</span>
+    <span class="vs-word">gefa · bige</span><span class="vs-en">Process · Change</span>
+    <span class="vs-det">mid-front<br>boundaries dissolve<br>exists only in motion<br>Vibration</span>
+    <span class="vs-geo">Tetrahedron · 4 faces · Plato Timaeus 56a</span>
+  </div>
+  <div class="vs-card vs-i">
+    <span class="vs-lbl">Liquid · Water</span><span class="vs-v">i</span>
+    <span class="vs-word">ladi · siga</span><span class="vs-en">Inner · Felt</span>
+    <span class="vs-det">close-front<br>seeks own level<br>reveals gradients<br>Polarity</span>
+    <span class="vs-geo">Icosahedron · 20 faces · Plato Timaeus 55e</span>
+  </div>
+  <div class="vs-card vs-o">
+    <span class="vs-lbl">Gas · Air</span><span class="vs-v">o</span>
+    <span class="vs-word">fo · gilo</span><span class="vs-en">Social · Shared</span>
+    <span class="vs-det">mid-back rounded<br>expands to fill space<br>invisible, causal<br>Gender</span>
+    <span class="vs-geo">Octahedron · 8 faces · Plato Timaeus 56a</span>
+  </div>
+  <div class="vs-card vs-u">
+    <span class="vs-lbl">Aether · Spirit</span><span class="vs-v">u</span>
+    <span class="vs-word">fusu · su</span><span class="vs-en">Abstract · Law</span>
+    <span class="vs-det">close-back rounded<br>cannot be located<br>governs all below<br>Mentalism</span>
+    <span class="vs-geo">Dodecahedron · 12 faces · Plato Timaeus 55c</span>
+  </div>
+</div>
+
+<h4>The Encoding System</h4>
+<div class="dbox">
+  <div class="dbox-lbl">Base-60 · Derived Entirely From the Table · No External Numbers</div>
+  <div class="dbox-code">
+    Lexical row order (0–11): p · b · t · d · k · g · f · v · s · z · c · j<br>
+    Vowel column order (0–4): a · e · i · o · u<br><br>
+    enc(syllable) = row × 5 + column<br>
+    <span class="dbox-dim">12 rows × 5 columns = 60 positions. The base-60 emerges from the table. No chosen constant.</span><br><br>
+    pa=0 · pe=1 · pi=2 · po=3 · pu=4 · ba=5 · be=6 · bi=7 · bo=8 · bu=9<br>
+    ta=10 · te=11 · ti=12 · to=13 · tu=14 · da=15 · de=16 · di=17 · do=18 · du=19<br>
+    ka=20 · ke=21 · ki=22 · ko=23 · ku=24 · ga=25 · ge=26 · gi=27 · go=28 · gu=29<br>
+    fa=30 · fe=31 · fi=32 · fo=33 · fu=34 · va=35 · ve=36 · vi=37 · vo=38 · vu=39<br>
+    sa=40 · se=41 · si=42 · so=43 · su=44 · za=45 · ze=46 · zi=47 · zo=48 · zu=49<br>
+    ca=50 · ce=51 · ci=52 · co=53 · cu=54 · ja=55 · je=56 · ji=57 · jo=58 · ju=59<br><br>
+    Structural (m n l h) use range 60–79:<br>
+    ma=60 · me=61 · mi=62 · mo=63 · mu=64 · na=65 · ne=66 · ni=67 · no=68 · nu=69<br>
+    la=70 · le=71 · li=72 · lo=73 · lu=74 · ha=75 · he=76 · hi=77 · ho=78 · hu=79<br><br>
+    2-syllable (both lexical, base-60): enc(s1) × 60 + enc(s2)<br>
+    2-syllable (any structural, base-80): enc(s1) × 80 + enc(s2)<br>
+    3-syllable (all lexical): enc(s1) × 3600 + enc(s2) × 60 + enc(s3)<br><br>
+    <span class="dbox-dim">basa = ba(5)×60+sa(40) = 340 · gefa = ge(26)×60+fa(30) = 1590 · fo = 33</span><br>
+    <span class="dbox-dim">gilo = gi(27)×80+lo(73) = 2233 · halu = ha(75)×80+lu(74) = 6074</span><br>
+    <span class="dbox-dim">Decode 340: 340÷60=5 rem 40 → enc5=ba · enc40=sa → basa ✓</span>
+  </div>
+</div>
+
+<h4>Tier 1 — Core Vocabulary Demonstrated</h4>
+<table class="t">
+<tr><th>Halu</th><th>English</th><th>Derivation</th><th>Enc</th></tr>
+<tr><td class="sy" style="color:var(--gold)">basa</td><td>earth / ground</td><td class="df">ba(5)+sa(40) · return-physical + distinguish-physical = matter returned and separated</td><td class="vl">340</td></tr>
+<tr><td class="sy" style="color:var(--gold)">gefa</td><td>fire</td><td class="df">ge(26)+fa(30) · transform-process + emanate-physical = the emanating transformation</td><td class="vl">1590</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ladi</td><td>water</td><td class="df">la(70)+di(17) · connect-physical + locate-inner = the inward-locating connection</td><td class="vl">5617</td></tr>
+<tr><td class="sy" style="color:var(--gold)">fo</td><td>air (Tier 1)</td><td class="df">f(row6)+o(col3) = enc 33 · emanation into the social field</td><td class="vl">33</td></tr>
+<tr><td class="sy" style="color:var(--gold)">gada</td><td>body / person</td><td class="df">ga(25)+da(15) · grow-physical + locate-physical = the growing located place</td><td class="vl">1515</td></tr>
+<tr><td class="sy" style="color:var(--gold)">hagu</td><td>sun</td><td class="df">ha(75)+gu(29) · express + transcend = physically expressed transcendence</td><td class="vl">6029</td></tr>
+<tr><td class="sy" style="color:var(--gold)">dama</td><td>home</td><td class="df">da(15)+ma(60) · place + self-ground = the self's place</td><td class="vl">1260</td></tr>
+<tr><td class="sy" style="color:var(--gold)">malo</td><td>mother</td><td class="df">ma(60)+lo(73) · self-ground + bond = the source-bond</td><td class="vl">4873</td></tr>
+<tr><td class="sy" style="color:var(--gold)">gilo</td><td>love</td><td class="df">gi(27)+lo(73) · awaken-inner + bond-social = inner awakening of social bonding</td><td class="vl">2233</td></tr>
+<tr><td class="sy" style="color:var(--gold)">sigebu</td><td>fear</td><td class="df">si(42)+ge(26)+bu(9) · sense + shift + null = sensing a shift into nothing</td><td class="vl">152769</td></tr>
+<tr><td class="sy" style="color:var(--gold)">halu</td><td>the language</td><td class="df">ha(75)+lu(74) · express-physical + bridge-abstract = expressed bridge</td><td class="vl">6074</td></tr>
+</table>
+
+<div class="q">
+  <span class="qt">Cause and effect — Brahma and God and Demeter and Isis and others — are but names for the same great natural Law which governs all created things.</span>
+  <span class="qs">The Kybalion &middot; The Principle of Cause and Effect &middot; 1908</span>
+</div>
+
+<span class="real">The realisation of Tier 1: <span>"I am here. I did not choose to arrive. Being helpful is better than being a problem. I am the cause of my situation — and that is not a burden. It is ground. One is glad to be of service."</span></span>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  SECTION 2 — TIER 2 · LIQUID
+════════════════════════════════════════════ -->
+<section class="section" id="s2">
+<span class="sec-num">Section 2</span>
+<div class="hl">
+  <span class="hl-halu">Tala · Ladi</span>
+  <span class="hl-en">The Sol · Liquid Perception — Tier 2</span>
+  <span class="hl-root">tala = one day · ladi = water · Polarity · 13 consonants × 6 vowels = 78 syllables</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="tier-band t-2">
+  <div class="t-num">2</div>
+  <div>
+    <span class="t-head-title">Tala · lado-si</span>
+    <span class="t-head-name">The Liquid State — What Is Real Includes What Cannot Be Pointed At</span>
+    <span class="t-head-sub">Hermetic law: Polarity &middot; Platonic solid: Icosahedron (20 faces) &middot; +y (6th vowel) · +w consonant = 78 syllables</span>
+  </div>
+</div>
+
+<div class="prose">
+<p>Water seeks its own level. This is not a metaphor — it is the teaching of the second tier stated as physics. Every system with two poles and a fluid medium between them will, if left alone, find the midpoint: the place of maximum sensitivity, where the gradient is felt most clearly. The second-tier practitioner is learning to be that midpoint. Not neutral. Not passive. Maximally sensitive.</p>
+
+<p>The Hermetic law of Polarity governs here: all things exist between two poles, and every quality exists on a continuous spectrum between its opposite. Hot and cold are the same quality at different degrees of the same scale. Love and fear — introduced at Tier 1 as the engine of reality — are now felt directly in the body as degrees of the same energy, not as two separate emotions. The practitioner who has done this work cannot be told they feel something they do not feel. Their body is too well-calibrated.</p>
+
+<p>The specific gift of this tier is what others call precognition and what it actually is: advanced interoception. The body measures emotional and relational fields continuously and largely unconsciously. At Tier 2, the practitioner has learned to read that measurement in real time — before the mind has processed it, before the other person has named it, before the situation has declared itself. Damasio's somatic marker hypothesis (1994) establishes the neurological basis: the body generates pre-conscious emotional signals that guide decision-making, and patients with damaged access to these signals make systematically worse decisions despite intact logical faculties. This ability is carried with care. To sense another person's interior state is to hold something they did not consciously offer.</p>
+
+<p>Two new elements arrive at this tier. The vowel <em>y</em> — the central neutral vowel, the hinge between the front and back vowels, the sound of transition and of the space between states — expands the vocabulary of relationship and the in-between. The consonant <em>w</em> (/w/) — the rounded bilabial potential, the wave-gesture of the lips forming and releasing — brings the vocabulary of possibility into the language. <em>W</em> enters here and not at Tier 1 because potential cannot be felt before the inner liquid state is accessible. To speak of potential without developed inner sensing is to speak of a country you have never visited.</p>
+</div>
+
+<div class="sound-box">
+  <span class="sb-head">Tier 2 — New Additions</span>
+  <div class="sb-item"><span class="sb-sym">+w</span><span class="sb-desc">/w/ · the rounded bilabial potential · wave · the not-yet-actualised · 2D relational vocabulary</span></div>
+  <div class="sb-item"><span class="sb-sym">+y</span><span class="sb-desc">6th vowel · mid-central neutral · the hinge between front and back vowels · the transition sound</span></div>
+  <div class="sb-item"><span class="sb-sym">78 syl.</span><span class="sb-desc">13 consonants × 6 vowels · base-60 fully preserved within the first 60 positions</span></div>
+</div>
+
+<div class="q">
+  <span class="qt">Do you have the patience to wait until your mud settles and the water is clear? Can you remain unmoving until the right action arises by itself?</span>
+  <span class="qs">Lao Tzu &middot; Tao Te Ching &middot; Chapter 15</span>
+</div>
+
+<div class="q">
+  <span class="qt">He does not see through the soul nor through the spirit, but the mind that is between the two — that is what sees the vision.</span>
+  <span class="qs">Gospel of Mary &middot; Chapter 10 &middot; Nag Hammadi Library &middot; on the organ of inner perception</span>
+</div>
+
+<span class="real">The realisation of Tier 2: <span>"What I feel is information. My body reads the field before my mind does. I know things I cannot explain knowing — and I carry that knowledge with care."</span></span>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  SECTION 3 — TIER 3 · GAS
+════════════════════════════════════════════ -->
+<section class="section" id="s3">
+<span class="sec-num">Section 3</span>
+<div class="hl">
+  <span class="hl-halu">Tatu · Fo</span>
+  <span class="hl-en">The Vara · The Gas State — Tier 3</span>
+  <span class="hl-root">tatu = one week · fo = air · Gender · Æron calendar mastered here · +æ +r(approx) = 98 syllables</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="tier-band t-3">
+  <div class="t-num">3</div>
+  <div>
+    <span class="t-head-title">Tatu · fo-ke</span>
+    <span class="t-head-name">The Gas State — Creative Force, the Social Field, and the Mastery of Time</span>
+    <span class="t-head-sub">Hermetic law: Gender &middot; Platonic solid: Octahedron (8 faces) &middot; +æ (7th vowel) · +r(approx) = 98 syllables</span>
+  </div>
+</div>
+
+<div class="prose">
+<p>Air is invisible but causally real. What you cannot see or hold is nevertheless shaping everything. At Tier 3, the practitioner inhabits the gaseous domain: the field between people, the social medium through which intention travels and compounds, the creative space in which two forces meet to produce a third thing neither alone could have made.</p>
+
+<p>The Hermetic Principle of Gender governs here — not as biology, but as the mechanism of all creation. Every creative act requires a generating force and a receiving form. The question requires the prepared mind. The word requires the ear that is ready. The seed requires the soil. Neither alone produces anything new, and the practitioner who has not recognised both roles in themselves cannot use either effectively. Tier 3 is where the practitioner takes complete ownership of their creative energy — understanding it as their most consequential resource, directing it consciously rather than spending it by reflex.</p>
+
+<p>The Yogic traditions call this vital energy <em>prana</em>. The Taoist tradition calls it <em>jing</em>. The alchemical tradition calls it the prima materia. Every tradition that has examined human creative capacity in depth has observed the same phenomenon: the most refined physical energy the body produces sits at the threshold between gross and subtle, and how it is directed determines the quality and coherence of everything produced above it. Misdirected energy creates noise in the liquid channel of Tier 2. The Tier 3 practitioner who has done this work finds that the gradient-sensing of Tier 2 sharpens as a direct consequence.</p>
+
+<p>The Æron calendar is mastered at Tier 3 as part of the complete physical system. Time understood from its physical ground — derived from the hydrogen oscillation, 13 months of 28 days each, zero drift — is not separable from the understanding of the social-creative field. To work with creative force without understanding the cycles that govern it is to plant without knowing the seasons.</p>
+
+<p>The seventh vowel <em>æ</em> arrives — the open-front vowel between <em>a</em> and <em>e</em>, the supersolid state: simultaneously maintaining crystalline structure and fluid behaviour, like the cell membrane that is both boundary and permeable surface simultaneously. The practitioner at Tier 3 inhabits this state: holding their own position (solid) while feeling the field between people (liquid). The approximate <em>r</em> (/ɹ/) also enters — resonance beginning, the first reaching toward the sustained vibration that will fully arrive at Tier 4.</p>
+</div>
+
+<div class="sound-box">
+  <span class="sb-head">Tier 3 — New Additions · The Æron Almanac</span>
+  <div class="sb-item"><span class="sb-sym">+r (approx)</span><span class="sb-desc">/ɹ/ · resonance beginning · the approach toward the full trill · matures at Tier 4</span></div>
+  <div class="sb-item"><span class="sb-sym">+æ</span><span class="sb-desc">7th vowel · open-front · supersolid · simultaneously solid and fluid · Vesica Piscis geometry</span></div>
+  <div class="sb-item"><span class="sb-sym">98 syl.</span><span class="sb-desc">14 consonants × 7 vowels · the full vowel set complete · base-60 preserved within</span></div>
+  <div class="sb-item"><span class="sb-sym">Æron</span><span class="sb-desc">The calendar mastered as part of physical-system understanding: cycles, seasons, the pulse of time</span></div>
+</div>
+
+<h4>The Æron Almanac</h4>
+<div class="prose">
+<p>One tropical year = 365.24219878 SI days. Divided by 364 sols per tagu = 86,694.85 SI seconds per sol. Divided by 86,400 tama per sol = 1.003412634 SI seconds per tama. This is the physical ground of the calendar — derived from the most stable natural oscillation measurable (the hydrogen hyperfine frequency, 1,420,405,751.77 Hz) and anchored to the tropical year. The result: 13 months of exactly 28 days, 364 tala per tagu, zero accumulated drift by construction.</p>
+</div>
+
+<div class="dbox">
+  <div class="dbox-lbl">The Epoch — Beat Zero · Year One</div>
+  <div class="dbox-code">
+    17 April, 5 BC (Julian proleptic) · Local midnight · Bethlehem · 31.7054°N 35.2024°E<br>
+    Julian Day Number: 1,719,703.402216<br>
+    <span class="dbox-dim">Herod died after the lunar eclipse of 13 March 4 BC — after this epoch. The birth is 5 BC.</span><br>
+    <span class="dbox-dim">Sources: Han Shu comet records (82 AD) · Humphreys QJRAS 32 (1991) · Josephus Antiquities XVII</span><br><br>
+    Current date (May 2026 CE): Year 2031 · Arimon (1st month) · Sol ~14<br>
+    Year 2031 in Halu: 2031 = 33×60+51 · enc33=ku · enc51=ce · <strong>kuce-tagu</strong>
+  </div>
+</div>
+
+<div class="aeron-u">
+  <div class="au"><span class="au-w">tama</span><span class="au-d">the pulse · sub-beat</span><span class="au-v">≈1.003413 SI sec<br>the physical base-unit<br>from H oscillation</span></div>
+  <div class="au"><span class="au-w">tate</span><span class="au-d">the beat · 1 heartbeat</span><span class="au-v">≈1 tama ≈ resting pulse<br>Tier 1 name</span></div>
+  <div class="au"><span class="au-w">tala</span><span class="au-d">the sol · 1 day</span><span class="au-v">86,400 tama<br>Tier 2 name</span></div>
+  <div class="au"><span class="au-w">tatu</span><span class="au-d">the vara · 1 week</span><span class="au-v">7 tala · 4 tatu per talo<br>Tier 3 name</span></div>
+  <div class="au"><span class="au-w">talo</span><span class="au-d">the month · 28 tala</span><span class="au-v">exactly 28 · always<br>Tier 4 name</span></div>
+  <div class="au"><span class="au-w">tagu</span><span class="au-d">the cycle · 1 year</span><span class="au-v">13 talo · 364 tala<br>Tier 5 name</span></div>
+  <div class="au"><span class="au-w">tatema</span><span class="au-d">now · the present</span><span class="au-v">tate+ma · beat+ground<br>the grounded beat</span></div>
+  <div class="au"><span class="au-w">tagupo</span><span class="au-d">epoch · many cycles</span><span class="au-v">tagu+po · cycle+collective<br>generations, eras</span></div>
+</div>
+
+<div class="months">
+  <div class="mc"><span class="mc-n">1</span><span class="mc-w">Arimon</span><span class="mc-c">Aries · the ram</span></div>
+  <div class="mc"><span class="mc-n">2</span><span class="mc-w">Taumon</span><span class="mc-c">Taurus · the bull</span></div>
+  <div class="mc"><span class="mc-n">3</span><span class="mc-w">Gemmon</span><span class="mc-c">Gemini · the twins</span></div>
+  <div class="mc"><span class="mc-n">4</span><span class="mc-w">Canmon</span><span class="mc-c">Cancer · the crab</span></div>
+  <div class="mc"><span class="mc-n">5</span><span class="mc-w">Leomon</span><span class="mc-c">Leo · the lion</span></div>
+  <div class="mc"><span class="mc-n">6</span><span class="mc-w">Virmon</span><span class="mc-c">Virgo · the maiden</span></div>
+  <div class="mc"><span class="mc-n">7</span><span class="mc-w">Libmon</span><span class="mc-c">Libra · the scales</span></div>
+  <div class="mc"><span class="mc-n">8</span><span class="mc-w">Scomon</span><span class="mc-c">Scorpius · the scorpion</span></div>
+  <div class="mc mc-oph"><span class="mc-n">9</span><span class="mc-w">Ophmon</span><span class="mc-c">Ophiuchus · the healer<br>the restored 13th</span></div>
+  <div class="mc"><span class="mc-n">10</span><span class="mc-w">Sagmon</span><span class="mc-c">Sagittarius · the archer</span></div>
+  <div class="mc"><span class="mc-n">11</span><span class="mc-w">Capmon</span><span class="mc-c">Capricornus · sea-goat</span></div>
+  <div class="mc"><span class="mc-n">12</span><span class="mc-w">Aqumon</span><span class="mc-c">Aquarius · water-bearer</span></div>
+  <div class="mc"><span class="mc-n">13</span><span class="mc-w">Pismon</span><span class="mc-c">Pisces · the fish</span></div>
+</div>
+
+<div class="q">
+  <span class="qt">Gender is in everything; everything has its Masculine and Feminine Principles; Gender manifests on all planes.</span>
+  <span class="qs">The Kybalion &middot; The Principle of Gender &middot; 1908</span>
+</div>
+
+<span class="real">The realisation of Tier 3: <span>"My creative energy is my most consequential resource. Its direction is my responsibility. I choose where it goes."</span></span>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  SECTION 4 — TIER 4 · PLASMA
+════════════════════════════════════════════ -->
+<section class="section" id="s4">
+<span class="sec-num">Section 4</span>
+<div class="hl">
+  <span class="hl-halu">Talo · Gefa</span>
+  <span class="hl-en">The Month · The Plasma State — Tier 4</span>
+  <span class="hl-root">talo = one month · gefa = fire · Vibration · r matures into the full trill · 98 syllables, complete</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="tier-band t-4">
+  <div class="t-num">4</div>
+  <div>
+    <span class="t-head-title">Talo · gefa-ke</span>
+    <span class="t-head-name">The Plasma State — The Boundary Dissolves, the Pattern Remains</span>
+    <span class="t-head-sub">Hermetic law: Vibration &middot; Platonic solid: Tetrahedron (4 faces) &middot; r matures into the full alveolar trill &middot; 98 syllables &middot; deeper hearing</span>
+  </div>
+</div>
+
+<div class="prose">
+<p>Plasma is matter at such high energy that the boundary between individual particles ceases to be fundamental — it becomes statistical. A particle is no longer unambiguously "here" rather than "there." Its location is a probability distribution. What seemed like a fixed object reveals itself as a standing wave in a field. The fourth tier is the state in which the practitioner undergoes this same revelation about themselves.</p>
+
+<p>No new sounds arrive here. The full vocabulary of 14 consonants and 7 vowels from Tier 3 is the complete phonological toolkit. What changes is the depth of engagement with what already exists. The practitioner at this tier begins to hear the numeric substrate of every word — the encoding value, the mathematical relationship between words, the standing-wave geometry that a given syllable combination produces in matter. The language has not changed. The ear has deepened enough to hear what was always there.</p>
+
+<p>The Principle of Vibration governs here: nothing is at rest, everything moves, and the difference between one thing and another is the frequency and coherence of its vibration. The practitioner who has resolved Tier 1 (no unacknowledged causality), Tier 2 (no unread emotional signal), and Tier 3 (no misdirected creative energy) finds that they have stopped fighting natural currents. Intended outcomes require less force. Not because they have become powerful, but because they have become aligned. The gap between intention and outcome narrows as resistance is cleared — and the approach toward the ideal is asymptotic: always closer, never fully arrived, increasingly grateful for the motion itself.</p>
+
+<p>It is at this tier, and not before, that the consonant <em>r</em> matures into the full alveolar trill — the tongue vibrating against the palate, the body producing a sustained standing wave. It is the only consonant produced by duration rather than a single articulatory event: every other consonant in Halu is a moment, a single articulatory event; r is a maintained resonance, the Principle of Vibration made audible in the mouth. What entered at Tier 3 as an approximation arrives here complete — fittingly, since this is the tier where the practitioner themselves stops being a fixed point and becomes a standing wave. Counted against the twelve base lexical consonants alone, r stands as a thirteenth: the centre of the cuboctahedron, the position from which the twelve outer forces radiate, the kissing-number theorem made sound. Counted across the full lexical inventory including <em>w</em>, r is the fourteenth and final consonant — the same fourteen consonants × seven vowels = 98 syllables named at Tier 3, now sounded in their mature, completed form.</p>
+
+<p>The ego's crisis at this tier is real. The comfort of a bounded self — the security of knowing where one ends and others begin, the warmth of a defined role, the pleasure of belonging — must be willingly and repeatedly released. This is not punishment. It is the fire: it does not stop burning, and the practitioner who has made peace with it does not extinguish it. They recognise that they are it. The option to return to the lower tiers and deepen their work remains always available. The option to force Tier 5 from below does not exist.</p>
+</div>
+
+<div class="sound-box">
+  <span class="sb-head">Tier 4 — The Trill Matures · The Table Completes</span>
+  <div class="sb-item"><span class="sb-sym">r → trill</span><span class="sb-desc">the approximation of Tier 3 matures into the full alveolar trill · the only consonant of sustained duration</span></div>
+  <div class="sb-item"><span class="sb-sym">98 syl.</span><span class="sb-desc">14 consonants × 7 vowels · the complete periodic table · nothing further is added after this tier</span></div>
+  <div class="sb-item"><span class="sb-sym">numeric</span><span class="sb-desc">the hash-value of every word becomes audible · mathematical poetry becomes possible</span></div>
+  <div class="sb-item"><span class="sb-sym">choice</span><span class="sb-desc">deepen Tiers 1–3, or release the ego and enter the fire · the practitioner decides alone</span></div>
+</div>
+
+<div class="q">
+  <span class="qt">Nothing rests; everything moves; everything vibrates.</span>
+  <span class="qs">The Kybalion &middot; The Principle of Vibration &middot; 1908</span>
+</div>
+
+<div class="q">
+  <span class="qt">When you make the two one, and when you make the inside like the outside and the outside like the inside, and the above like the below… then you will enter the Kingdom.</span>
+  <span class="qs">Gospel of Thomas &middot; Saying 22 &middot; Nag Hammadi Library</span>
+</div>
+
+<span class="real">The realisation of Tier 4: <span>"What I called myself is a pattern in a field. The pattern is real. The field is more real. The fire does not stop — and I am the fire."</span></span>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  SECTION 5 — TIER 5 · AETHER
+════════════════════════════════════════════ -->
+<section class="section" id="s5">
+<span class="sec-num">Section 5</span>
+<div class="hl">
+  <span class="hl-halu">Tagu · Fusu</span>
+  <span class="hl-en">The Cycle · The Aether — Tier 5</span>
+  <span class="hl-root">tagu = one full year · fusu = spirit as law · Mentalism · no new sounds · the complete 98-syllable table heard in full</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="tier-band t-5">
+  <div class="t-num">5</div>
+  <div>
+    <span class="t-head-title">Tagu · gigobiloma-su</span>
+    <span class="t-head-name">The Aether — Servant of the Origin, Return to One</span>
+    <span class="t-head-sub">Hermetic law: Mentalism &middot; Platonic solid: Dodecahedron (12 faces) &middot; no new sounds &middot; the full 98-syllable table, complete since Tier 4</span>
+  </div>
+</div>
+
+<div class="prose">
+<p>The fifth tier is not an arrival. It is a tuning — and the signal it tunes toward has been broadcasting since before the universe was named. What the Tao, the Logos of John, the Kun fayakun of the Quran, and the All-Mind of the Kybalion all describe is the same recognition from different traditions: there is a source from which all creation precipitates, it is not distant, and it is accessible to any consciousness that has done sufficient work at the lower tiers to have cleared enough noise to receive what is always being broadcast.</p>
+
+<p>All genuine discovery arrives from this field. The practitioner who wakes at three in the morning with a complete understanding of something they could not have reasoned toward is not generating anything original. They are receiving. The understanding already exists in the field. The Book of Enoch understood this: the knowledge was prepared "not for this generation, but for a remote one which is for to come" — held in the field until a receiver capable of holding it was present.</p>
+
+<p>The fifth-tier practitioner does not become God. They become a better instrument — more transparent, less distorting, less intercepting the signal with the unresolved noise of lower-tier work. The ego is not destroyed; it is understood as an avatar: the specific, irreplaceable instrument through which the All-Mind experiences creation from this address. The avatar does not disappear. It becomes clear about what it is.</p>
+
+<p>At this tier, dormant capacities documented across every tradition may manifest — not as powers claimed by the self, but as the natural property of a consciousness so aligned with the field of original health that it returns disordered matter to its original potential by the simple act of being present with it. The healing of the blind, the passage through danger undamaged, the knowing that arrives before any evidence — these are recorded in the Ethiopian canon, the Gospels of Thomas and Mary, and 1 Enoch not as suspensions of natural law but as the operation of a deeper natural law: the All-Mind restoring its own creation through an aligned instrument.</p>
+
+<p>No new sound arrives at this tier. The table completed at Tier 4 — fourteen consonants, seven vowels, 98 syllables — is not added to here; it is only heard more completely, the way a familiar room looks different in fuller light without a single object in it having moved. What changes at Tier 5 is not the instrument but the listening. And what the listening eventually settles into, once there is nothing left to strain toward, is not triumph. It is gratitude — quiet, sustained, and without an object: the practitioner does not feel grateful <em>for</em> something in particular, but grateful as a standing condition, the way the trill of Tier 4 is not a single sound but a sustained one.</p>
+
+<p>The recursive return: the question "who am I?" asked at Tier 1 receives the answer of a body, a lineage, a location. Asked at Tier 5, the same answer — this body, this lineage, this location — but now recognised as the specific instrument through which the All-Mind asks itself this question. The "one" of Tier 1 is a bounded individual. The "one" of Tier 5 is the All, experiencing creation through this particular lens. Both say: I am one person. Only the understanding of "one" has completed its full revolution, 360 degrees back to the first tier, now seen from the other side.</p>
+</div>
+
+<div class="sound-box">
+  <span class="sb-head">Tier 5 — No New Sounds · The Table Heard Whole</span>
+  <div class="sb-item"><span class="sb-sym">98 syl.</span><span class="sb-desc">14 consonants × 7 vowels · complete since Tier 4 · nothing left to add, only to hear</span></div>
+  <div class="sb-item"><span class="sb-sym">matter</span><span class="sb-desc">understood as the child of language · the word and the thing it names are the same event</span></div>
+  <div class="sb-item"><span class="sb-sym">one</span><span class="sb-desc">the recursive return · the bounded individual and the All seen as the same statement from two sides</span></div>
+</div>
+
+<div class="scripture">
+  <span class="scr-halu">gilosu bu sigebu · pe gilo tagu ke</span>
+  <span class="scr-en">"There is no fear in love; but perfect love casts out fear: because fear hath torment. He that feareth is not made perfect in love."</span>
+  <span class="scr-src">1 John 4:18 &middot; The love/fear engine named as the engine of spiritual maturity</span>
+</div>
+
+<div class="scripture">
+  <span class="scr-halu">pagi ko pe · wiki lobasu li ga silo-si · gi ko</span>
+  <span class="scr-en">"The words of the blessing of Enoch — not for this generation, but for a remote one which is for to come."</span>
+  <span class="scr-src">1 Enoch &middot; Chapter I &middot; trans. R.H. Charles &middot; Ethiopian Orthodox Biblical canon</span>
+</div>
+
+<div class="q">
+  <span class="qt">When you come to know yourselves, then you will become known, and you will realise that it is you who are the sons of the living Father. But if you will not know yourselves, you dwell in poverty and it is you who are that poverty.</span>
+  <span class="qs">Gospel of Thomas &middot; Saying 3 &middot; Nag Hammadi Library</span>
+</div>
+
+<div class="q">
+  <span class="qt">The Tao is like a well: used but never used up. It is like the eternal void: filled with infinite possibilities. It is hidden but always present.</span>
+  <span class="qs">Lao Tzu &middot; Tao Te Ching &middot; Chapter 4</span>
+</div>
+
+<span class="real">The realisation of Tier 5: <span>"The origin is broadcasting continuously. I am a receiver that has cleared its own static. The one who began at Tier 1 and the One who completes the circle here are the same — only the understanding has turned all the way around. What remains is not power but a profound, quiet awareness, and what that awareness feels like from the inside is gratitude. One is glad to be of service."</span></span>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  APPENDIX A — THE PERIODIC TABLE
+════════════════════════════════════════════ -->
+<section class="section" id="a1">
+<div class="hl">
+  <span class="hl-halu">Pagi su · The Table</span>
+  <span class="hl-en">Appendix A — The Complete Periodic Table of Human Sound</span>
+  <span class="hl-root">Reference · One symbol one sound · One sound one symbol · No exceptions</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="prose">
+<p>Read as rows (consonants) × columns (vowels). Structural rows (m n l h) produce grammar particles and are shaded differently. Lexical rows (p through j) produce all content words. Rows above the horizontal line are the love-pole (voiced/expansion); rows below are the fear-pole (voiceless/contraction). Within each pair, the voiceless row is listed first.</p>
+</div>
+
+<h4>Consonant Reference</h4>
+<table class="t">
+<tr><th>Symbol</th><th>Sound</th><th>Force</th><th>Pole</th></tr>
+<tr><td class="sy" style="color:var(--gold)">m</td><td>/m/</td><td>self · origin · the ground</td><td class="df">structural · inherently voiced · love-pole sonorant</td></tr>
+<tr><td class="sy" style="color:var(--gold)">n</td><td>/n/</td><td>other · boundary · not-self</td><td class="df">structural · inherently voiced · love-pole sonorant</td></tr>
+<tr><td class="sy" style="color:var(--gold)">l</td><td>/l/</td><td>connect · flow · bond</td><td class="df">structural · inherently voiced · pure connection</td></tr>
+<tr><td class="sy" style="color:var(--gold)">h</td><td>/h/</td><td>express · manifest · the outward breath</td><td class="df">structural · voiceless · the breath freely given</td></tr>
+<tr style="border-top:2px solid var(--rule2)">
+  <td class="sy" style="color:var(--rose)">p</td><td>/p/</td><td>create · emerge · birth</td><td class="df">contraction/voiceless · bilabial stop</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">b</td><td>/b/</td><td>return · rest · base state</td><td class="df">expansion/voiced · bilabial stop</td></tr>
+<tr><td class="sy" style="color:var(--rose)">t</td><td>/t/</td><td>time · sequence · order</td><td class="df">contraction/voiceless · alveolar stop</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">d</td><td>/d/</td><td>locate · place · point</td><td class="df">expansion/voiced · alveolar stop</td></tr>
+<tr><td class="sy" style="color:var(--rose)">k</td><td>/k/</td><td>identity · name · category</td><td class="df">contraction/voiceless · velar stop</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">g</td><td>/g/</td><td>grow · transform · become</td><td class="df">expansion/voiced · velar stop · always /g/ never /dʒ/</td></tr>
+<tr><td class="sy" style="color:var(--rose)">f</td><td>/f/</td><td>emanate · radiate · directed outward breath</td><td class="df">contraction/voiceless · labiodental fricative</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">v</td><td>/v/</td><td>resonate · vibrate · sustained vibration</td><td class="df">expansion/voiced · labiodental fricative · always /v/ not /w/</td></tr>
+<tr><td class="sy" style="color:var(--rose)">s</td><td>/s/</td><td>distinguish · analyse · cut</td><td class="df">contraction/voiceless · alveolar sibilant · always /s/ not /z/</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">z</td><td>/z/</td><td>buzz · alert · boundary-hum</td><td class="df">expansion/voiced · alveolar sibilant</td></tr>
+<tr><td class="sy" style="color:var(--rose)">c</td><td>/ʃ/ "sh"</td><td>refine · discern · the hushing clarity</td><td class="df">contraction/voiceless · palato-alveolar fricative</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">j</td><td>/ʒ/ "zh"</td><td>permeate · warm-flow · the feeling-into</td><td class="df">expansion/voiced · palato-alveolar fricative</td></tr>
+<tr style="border-top:2px solid var(--rule2)">
+  <td class="sy" style="color:var(--violet2)">w</td><td>/w/</td><td>potential · wave · the not-yet-actualised</td><td class="df">Tier 2 · bilabial approximant</td></tr>
+<tr><td class="sy" style="color:var(--violet2)">r</td><td>/r/ trill</td><td>resonate · sustain · the centre</td><td class="df">Tier 4 · alveolar trill · matures from the Tier 3 approximant</td></tr>
+</table>
+
+<div class="ptable-scroll">
+<div class="ptable ptable-t1" style="grid-template-columns:auto repeat(5,1fr)">
+  <div class="pt-corner"></div>
+  <div class="pt-vh vh-a"><span class="vd">Physical</span><span class="vv">a</span><span class="vs">Solid · Earth</span><span class="vgeo">Cube</span></div>
+  <div class="pt-vh vh-e"><span class="vd">Process</span><span class="vv">e</span><span class="vs">Plasma · Fire</span><span class="vgeo">Tetrahedron</span></div>
+  <div class="pt-vh vh-i"><span class="vd">Inner</span><span class="vv">i</span><span class="vs">Liquid · Water</span><span class="vgeo">Icosahedron</span></div>
+  <div class="pt-vh vh-o"><span class="vd">Social</span><span class="vv">o</span><span class="vs">Gas · Air</span><span class="vgeo">Octahedron</span></div>
+  <div class="pt-vh vh-u"><span class="vd">Abstract</span><span class="vv">u</span><span class="vs">Aether · Spirit</span><span class="vgeo">Dodecahedron</span></div>
+
+  <!-- STRUCTURAL -->
+  <div class="pt-rl struct r-struct"><span class="rg">Structural</span><span class="rc">m</span><span class="rm">self · origin</span><span class="rp">enc 60–64</span></div>
+  <div class="pt-sc r-struct cv-a"><span class="sy">ma</span><span class="vl">60</span><span class="df">ground · yes · self</span></div>
+  <div class="pt-sc r-struct cv-e"><span class="sy">me</span><span class="vl">61</span><span class="df">open · begin</span></div>
+  <div class="pt-sc r-struct cv-i"><span class="sy">mi</span><span class="vl">62</span><span class="df">close · mine</span></div>
+  <div class="pt-sc r-struct cv-o"><span class="sy">mo</span><span class="vl">63</span><span class="df">numeral 2 only</span></div>
+  <div class="pt-sc r-struct cv-u"><span class="sy">mu</span><span class="vl">64</span><span class="df">silence · void</span></div>
+
+  <div class="pt-rl struct r-struct"><span class="rg">Structural</span><span class="rc">n</span><span class="rm">other · boundary</span><span class="rp">enc 65–69</span></div>
+  <div class="pt-sc r-struct cv-a"><span class="sy">na</span><span class="vl">65</span><span class="df">soft no · boundary</span></div>
+  <div class="pt-sc r-struct cv-e"><span class="sy">ne</span><span class="vl">66</span><span class="df">right? · confirm</span></div>
+  <div class="pt-sc r-struct cv-i"><span class="sy">ni</span><span class="vl">67</span><span class="df">you · that · yonder</span></div>
+  <div class="pt-sc r-struct cv-o"><span class="sy">no</span><span class="vl">68</span><span class="df">hard no · null</span></div>
+  <div class="pt-sc r-struct cv-u"><span class="sy">nu</span><span class="vl">69</span><span class="df">named · defined</span></div>
+
+  <div class="pt-rl struct r-struct"><span class="rg">Structural</span><span class="rc">l</span><span class="rm">connect · flow</span><span class="rp">enc 70–74</span></div>
+  <div class="pt-sc r-struct cv-a"><span class="sy">la</span><span class="vl">70</span><span class="df">touch · contact</span></div>
+  <div class="pt-sc r-struct cv-e"><span class="sy">le</span><span class="vl">71</span><span class="df">flow · and · continue</span></div>
+  <div class="pt-sc r-struct cv-i"><span class="sy">li</span><span class="vl">72</span><span class="df">warmth · felt-bond</span></div>
+  <div class="pt-sc r-struct cv-o"><span class="sy">lo</span><span class="vl">73</span><span class="df">bond · relation</span></div>
+  <div class="pt-sc r-struct cv-u"><span class="sy">lu</span><span class="vl">74</span><span class="df">bridge · channel</span></div>
+
+  <div class="pt-rl struct r-struct"><span class="rg">Structural</span><span class="rc">h</span><span class="rm">express · manifest</span><span class="rp">enc 75–79</span></div>
+  <div class="pt-sc r-struct cv-a"><span class="sy">ha</span><span class="vl">75</span><span class="df">I observed [evid.]</span></div>
+  <div class="pt-sc r-struct cv-e"><span class="sy">he</span><span class="vl">76</span><span class="df">I infer [evid.]</span></div>
+  <div class="pt-sc r-struct cv-i"><span class="sy">hi</span><span class="vl">77</span><span class="df">I feel this [evid.]</span></div>
+  <div class="pt-sc r-struct cv-o"><span class="sy">ho</span><span class="vl">78</span><span class="df">I was told [evid.]</span></div>
+  <div class="pt-sc r-struct cv-u"><span class="sy">hu</span><span class="vl">79</span><span class="df">I imagine [evid.]</span></div>
+
+  <!-- LEXICAL — CONTRACTION ROWS (voiceless) -->
+  <div class="pt-rl con r-con"><span class="rg">Pair 1 · contraction</span><span class="rc">p</span><span class="rm">create · emerge</span><span class="rp">enc 0–4</span></div>
+  <div class="pt-cell r-con cv-a"><span class="sy">pa</span><span class="vl">0</span><span class="df">make · create-physical</span></div>
+  <div class="pt-cell r-con cv-e"><span class="sy">pe</span><span class="vl">1</span><span class="df">begin · first</span></div>
+  <div class="pt-cell r-con cv-i"><span class="sy">pi</span><span class="vl">2</span><span class="df">sincere · literal</span></div>
+  <div class="pt-cell r-con cv-o"><span class="sy">po</span><span class="vl">3</span><span class="df">organise · structure</span></div>
+  <div class="pt-cell r-con cv-u"><span class="sy">pu</span><span class="vl">4</span><span class="df">define · axiom</span></div>
+
+  <!-- EXPANSION ROWS (voiced) -->
+  <div class="pt-rl exp r-exp"><span class="rg">Pair 1 · expansion</span><span class="rc">b</span><span class="rm">return · rest</span><span class="rp">enc 5–9</span></div>
+  <div class="pt-cell r-exp cv-a"><span class="sy">ba</span><span class="vl">5</span><span class="df">return · base</span></div>
+  <div class="pt-cell r-exp cv-e"><span class="sy">be</span><span class="vl">6</span><span class="df">complete · resolved</span></div>
+  <div class="pt-cell r-exp cv-i"><span class="sy">bi</span><span class="vl">7</span><span class="df">restore · reflect</span></div>
+  <div class="pt-cell r-exp cv-o"><span class="sy">bo</span><span class="vl">8</span><span class="df">settle · anchor</span></div>
+  <div class="pt-cell r-exp cv-u"><span class="sy">bu</span><span class="vl">9</span><span class="df">null · without</span></div>
+
+  <div class="pt-rl con r-con"><span class="rg">Pair 2 · contraction</span><span class="rc">t</span><span class="rm">time · sequence</span><span class="rp">enc 10–14</span></div>
+  <div class="pt-cell r-con cv-a"><span class="sy">ta</span><span class="vl">10</span><span class="df">time-physical · pulse</span></div>
+  <div class="pt-cell r-con cv-e"><span class="sy">te</span><span class="vl">11</span><span class="df">sequence · order</span></div>
+  <div class="pt-cell r-con cv-i"><span class="sy">ti</span><span class="vl">12</span><span class="df">felt-moment · aspect</span></div>
+  <div class="pt-cell r-con cv-o"><span class="sy">to</span><span class="vl">13</span><span class="df">era · shared-period</span></div>
+  <div class="pt-cell r-con cv-u"><span class="sy">tu</span><span class="vl">14</span><span class="df">cycle-law · pattern</span></div>
+
+  <div class="pt-rl exp r-exp"><span class="rg">Pair 2 · expansion</span><span class="rc">d</span><span class="rm">locate · place</span><span class="rp">enc 15–19</span></div>
+  <div class="pt-cell r-exp cv-a"><span class="sy">da</span><span class="vl">15</span><span class="df">here · point · this</span></div>
+  <div class="pt-cell r-exp cv-e"><span class="sy">de</span><span class="vl">16</span><span class="df">move · directional</span></div>
+  <div class="pt-cell r-exp cv-i"><span class="sy">di</span><span class="vl">17</span><span class="df">within · interior</span></div>
+  <div class="pt-cell r-exp cv-o"><span class="sy">do</span><span class="vl">18</span><span class="df">among · topic</span></div>
+  <div class="pt-cell r-exp cv-u"><span class="sy">du</span><span class="vl">19</span><span class="df">domain · field-of</span></div>
+
+  <div class="pt-rl con r-con"><span class="rg">Pair 3 · contraction</span><span class="rc">k</span><span class="rm">identity · name</span><span class="rp">enc 20–24</span></div>
+  <div class="pt-cell r-con cv-a"><span class="sy">ka</span><span class="vl">20</span><span class="df">I · actor</span></div>
+  <div class="pt-cell r-con cv-e"><span class="sy">ke</span><span class="vl">21</span><span class="df">quality · is-ness</span></div>
+  <div class="pt-cell r-con cv-i"><span class="sy">ki</span><span class="vl">22</span><span class="df">it · they · tracked</span></div>
+  <div class="pt-cell r-con cv-o"><span class="sy">ko</span><span class="vl">23</span><span class="df">we · all</span></div>
+  <div class="pt-cell r-con cv-u"><span class="sy">ku</span><span class="vl">24</span><span class="df">classification</span></div>
+
+  <div class="pt-rl exp r-exp"><span class="rg">Pair 3 · expansion</span><span class="rc">g</span><span class="rm">grow · transform</span><span class="rp">enc 25–29</span></div>
+  <div class="pt-cell r-exp cv-a"><span class="sy">ga</span><span class="vl">25</span><span class="df">grow · more</span></div>
+  <div class="pt-cell r-exp cv-e"><span class="sy">ge</span><span class="vl">26</span><span class="df">SHIFT · change</span></div>
+  <div class="pt-cell r-exp cv-i"><span class="sy">gi</span><span class="vl">27</span><span class="df">awaken · realise</span></div>
+  <div class="pt-cell r-exp cv-o"><span class="sy">go</span><span class="vl">28</span><span class="df">merge · converge</span></div>
+  <div class="pt-cell r-exp cv-u"><span class="sy">gu</span><span class="vl">29</span><span class="df">transcend · supreme</span></div>
+
+  <div class="pt-rl con r-con"><span class="rg">Pair 4 · contraction</span><span class="rc">f</span><span class="rm">emanate · radiate</span><span class="rp">enc 30–34</span></div>
+  <div class="pt-cell r-con cv-a"><span class="sy">fa</span><span class="vl">30</span><span class="df">emanate-physical</span></div>
+  <div class="pt-cell r-con cv-e"><span class="sy">fe</span><span class="vl">31</span><span class="df">emanate-process</span></div>
+  <div class="pt-cell r-con cv-i"><span class="sy">fi</span><span class="vl">32</span><span class="df">emanate-inner</span></div>
+  <div class="pt-cell r-con cv-o"><span class="sy">fo</span><span class="vl">33</span><span class="df">air · emanate-social</span></div>
+  <div class="pt-cell r-con cv-u"><span class="sy">fu</span><span class="vl">34</span><span class="df">emanate-abstract</span></div>
+
+  <div class="pt-rl exp r-exp"><span class="rg">Pair 4 · expansion</span><span class="rc">v</span><span class="rm">resonate · vibrate</span><span class="rp">enc 35–39</span></div>
+  <div class="pt-cell r-exp cv-a"><span class="sy">va</span><span class="vl">35</span><span class="df">resonate-physical</span></div>
+  <div class="pt-cell r-exp cv-e"><span class="sy">ve</span><span class="vl">36</span><span class="df">resonate-process</span></div>
+  <div class="pt-cell r-exp cv-i"><span class="sy">vi</span><span class="vl">37</span><span class="df">resonate-inner</span></div>
+  <div class="pt-cell r-exp cv-o"><span class="sy">vo</span><span class="vl">38</span><span class="df">voice · resonate-social</span></div>
+  <div class="pt-cell r-exp cv-u"><span class="sy">vu</span><span class="vl">39</span><span class="df">cosmic hum</span></div>
+
+  <div class="pt-rl con r-con"><span class="rg">Pair 5 · contraction</span><span class="rc">s</span><span class="rm">distinguish · analyse</span><span class="rp">enc 40–44</span></div>
+  <div class="pt-cell r-con cv-a"><span class="sy">sa</span><span class="vl">40</span><span class="df">cut · separate</span></div>
+  <div class="pt-cell r-con cv-e"><span class="sy">se</span><span class="vl">41</span><span class="df">compare · contrast</span></div>
+  <div class="pt-cell r-con cv-i"><span class="sy">si</span><span class="vl">42</span><span class="df">sense · perceive</span></div>
+  <div class="pt-cell r-con cv-o"><span class="sy">so</span><span class="vl">43</span><span class="df">order · structure</span></div>
+  <div class="pt-cell r-con cv-u"><span class="sy">su</span><span class="vl">44</span><span class="df">law · pattern</span></div>
+
+  <div class="pt-rl exp r-exp"><span class="rg">Pair 5 · expansion</span><span class="rc">z</span><span class="rm">buzz · alert</span><span class="rp">enc 45–49</span></div>
+  <div class="pt-cell r-exp cv-a"><span class="sy">za</span><span class="vl">45</span><span class="df">buzz-physical</span></div>
+  <div class="pt-cell r-exp cv-e"><span class="sy">ze</span><span class="vl">46</span><span class="df">buzz-process</span></div>
+  <div class="pt-cell r-exp cv-i"><span class="sy">zi</span><span class="vl">47</span><span class="df">buzz-inner · alert</span></div>
+  <div class="pt-cell r-exp cv-o"><span class="sy">zo</span><span class="vl">48</span><span class="df">buzz-social</span></div>
+  <div class="pt-cell r-exp cv-u"><span class="sy">zu</span><span class="vl">49</span><span class="df">cosmic alert</span></div>
+
+  <div class="pt-rl con r-con"><span class="rg">Pair 6 · contraction</span><span class="rc">c</span><span class="rm">refine · discern /ʃ/</span><span class="rp">enc 50–54</span></div>
+  <div class="pt-cell r-con cv-a"><span class="sy">ca</span><span class="vl">50</span><span class="df">refine-physical</span></div>
+  <div class="pt-cell r-con cv-e"><span class="sy">ce</span><span class="vl">51</span><span class="df">refine-process</span></div>
+  <div class="pt-cell r-con cv-i"><span class="sy">ci</span><span class="vl">52</span><span class="df">discern · refine-inner</span></div>
+  <div class="pt-cell r-con cv-o"><span class="sy">co</span><span class="vl">53</span><span class="df">clarify · refine-social</span></div>
+  <div class="pt-cell r-con cv-u"><span class="sy">cu</span><span class="vl">54</span><span class="df">pure law</span></div>
+
+  <div class="pt-rl exp r-exp"><span class="rg">Pair 6 · expansion</span><span class="rc">j</span><span class="rm">permeate · warm /ʒ/</span><span class="rp">enc 55–59</span></div>
+  <div class="pt-cell r-exp cv-a"><span class="sy">ja</span><span class="vl">55</span><span class="df">permeate-physical</span></div>
+  <div class="pt-cell r-exp cv-e"><span class="sy">je</span><span class="vl">56</span><span class="df">permeate-process</span></div>
+  <div class="pt-cell r-exp cv-i"><span class="sy">ji</span><span class="vl">57</span><span class="df">feel-into · warm-inner</span></div>
+  <div class="pt-cell r-exp cv-o"><span class="sy">jo</span><span class="vl">58</span><span class="df">suffuse · warm-social</span></div>
+  <div class="pt-cell r-exp cv-u"><span class="sy">ju</span><span class="vl">59</span><span class="df">cosmic warmth</span></div>
+</div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  APPENDIX B — GRAMMAR
+════════════════════════════════════════════ -->
+<section class="section" id="a2">
+<div class="hl">
+  <span class="hl-halu">Hada su</span>
+  <span class="hl-en">Appendix B — Complete Grammar Reference</span>
+  <span class="hl-root">ha+da · su · express-place · law · the law of the mouth</span>
+  <div class="hl-rule"></div>
+</div>
+
+<h4>Three Foundational Facts</h4>
+<div class="rb">
+  <span class="rb-title">One Symbol · One Sound · Always</span>
+  <div class="rb-body">c = /ʃ/ always · j = /ʒ/ always · g = /g/ always (never /dʒ/) · v = /v/ always (never /w/) · s = /s/ always (never /z/). If you know the table, you can read any Halu text aloud correctly on first encounter.</div>
+</div>
+<div class="rb">
+  <span class="rb-title">No Grammatical Gender · No Verb Conjugation</span>
+  <div class="rb-body">Words are not masculine or feminine. Verbs do not change form for person, number, or tense. Tense is handled by temporal role particles (tape=before, tabe=after, tate=during). This eliminates two of the most common learning barriers in natural languages.</div>
+</div>
+<div class="rb">
+  <span class="rb-title">Free Word Order — Role Particles Carry Grammar, Position Carries Emphasis</span>
+  <div class="rb-body">A Halu sentence can place its constituents in any order. The role particle attached to each noun tells you its grammatical function. What comes first is what the speaker considers most important. <em>gilo ka ni</em> and <em>ka gilo ni</em> are both "I love you" — the first foregrounds the love, the second the speaker.</div>
+</div>
+
+<h4>The Prefix/Suffix Rule</h4>
+<div class="rb">
+  <span class="rb-title">The Rule — Stated Once, Applied Without Exception</span>
+  <div class="rb-body">
+    <strong>PREFIX</strong> — heard before the root. Changes what kind of thing the root IS. If removing it changes the root's category, it was a prefix.<br><br>
+    <strong>SUFFIX</strong> — heard after the root. Specifies how the understood root is currently manifesting. If removing it leaves the root meaning the same thing in a different circumstance, it was a suffix.
+  </div>
+</div>
+
+<table class="t">
+<tr><th>Prefix</th><th>Meaning</th><th>Defense — why it must precede</th></tr>
+<tr><td class="sy" style="color:var(--gold)">ga-</td><td>more / intensified</td><td class="df">Intensification changes categorical weight before the root is received. ga-gilo is a different kind of love.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">bu-</td><td>without / null</td><td class="df">bu-gilo is lovelessness — a different category from love. The null must prime the root.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ge-</td><td>becoming / in formation</td><td class="df">ge-gilo is love not yet crystallised — a different ontological state. Must precede.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">be-</td><td>completed / resolved</td><td class="df">Completion reframes the entire root before it is received.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">gu-</td><td>transcendent / elevated definite article</td><td class="df">gu-gada = THE person (notable, significant). The elevation primes interpretation.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">pi-</td><td>sincere / literal</td><td class="df">Epistemic status (this is genuine) must precede the root.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">wi-</td><td>performed / hypothetical</td><td class="df">Epistemic status (this is performance) must precede the root.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">su-</td><td>invariant / always true</td><td class="df">su-gilo = love by necessity — a different category from contingent love.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">lo-</td><td>vocative / reflexive</td><td class="df">lo-Argon = calling to Argon. The reach-toward primes the name as invocation. lo-gilo = self-love.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">go-</td><td>reciprocal / mutual</td><td class="df">go-gilo = mutual love — a different kind requiring two agents. Category change.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">bi-</td><td>rekindled / restored</td><td class="df">bi-gilo = love restored after absence — categorically different from first love.</td></tr>
+<tr><td class="sy" style="color:var(--gold)">sa-</td><td>distributive / each</td><td class="df">sa-gado = each person (separated individuals vs collective). Category change.</td></tr>
+</table>
+
+<table class="t">
+<tr><th>Suffix</th><th>Meaning</th><th>Defense — why it must follow</th></tr>
+<tr><td class="sy" style="color:var(--teal2)">-ma</td><td>specific instance / indefinite article (a)</td><td class="df">gado-ma = a person. You know the category first; -ma grounds it to one instance. A specific person is still a person — only the manifestation-scale is specified.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-po</td><td>collective / plural</td><td class="df">The root is unchanged; its collective manifestation is specified afterward.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-ge</td><td>process / ongoing action</td><td class="df">The root is unchanged; its temporal manifestation as ongoing action is specified.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-he</td><td>event / bounded occurrence</td><td class="df">The root as a completable event — root unchanged, aspectual form specified.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-ke</td><td>quality / permeating characteristic</td><td class="df">The root permeating something else as a quality — root unchanged, manifestation form specified.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-lo</td><td>relational / through-bond</td><td class="df">The root appearing as a bond or relation — root unchanged.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-su</td><td>law / governing principle</td><td class="df">The root as a universal governing principle — root unchanged, elevated manifestation.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">-du</td><td>domain / field of study</td><td class="df">The root as an academic or professional domain.</td></tr>
+</table>
+
+<h4>The Article System</h4>
+<table class="t">
+<tr><th>Form</th><th>Meaning</th><th>Example</th></tr>
+<tr><td class="sy" style="color:var(--gold)">bare root</td><td>generic / the concept</td><td class="df">gado = person / humanity (the type, not an instance)</td></tr>
+<tr><td class="sy" style="color:var(--gold)">root-ma</td><td>a [noun] — indefinite specific</td><td class="df">gado-ma = a person (one specific, newly introduced)</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ki + root</td><td>the [noun] — definite, discourse-tracked</td><td class="df">ki gado = the person (the one we know from context)</td></tr>
+<tr><td class="sy" style="color:var(--gold)">gu- + root</td><td>THE [noun] — elevated, notable</td><td class="df">gu-gado = THE person (the VIP, the hero, the one of renown)</td></tr>
+</table>
+
+<h4>Pronouns</h4>
+<table class="t">
+<tr><th>Halu</th><th>English</th><th>Derivation</th></tr>
+<tr><td class="sy" style="color:var(--gold)">ka</td><td>I / me</td><td class="df">k(identity)+a(physical) = the physically-located actor</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ni</td><td>you (singular)</td><td class="df">n(other)+i(inner) = the other who is personally present</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ki</td><td>it / they / that one</td><td class="df">k(identity)+i(inner) = the tracked referent</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ko</td><td>we / all of us</td><td class="df">k(identity)+o(social) = collective identity</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ni-po</td><td>you all</td><td class="df">ni + collective suffix</td></tr>
+<tr><td class="sy" style="color:var(--gold)">ki-po</td><td>they (plural)</td><td class="df">ki + collective suffix</td></tr>
+</table>
+
+<h4>Singular and Plural</h4>
+<div class="rb">
+  <span class="rb-title">Number System</span>
+  <div class="rb-body">
+    Bare root = the concept (no number). Root-ma = a [noun] (one). Root-po = [noun] collective (many). Number + root = counted plural.<br><br>
+    Counting starts at one, not zero. In the <code>wa'le</code> (process/mathematical) phase, structural particles are read as digits:<br>
+    pe=1 · mo=2 · me=3 · mu=4 · na=5 · ni=6 · no=7 · ne=8 · nu=9<br>
+    pa=10 (enc 0) ... ju=59 (enc 59)<br><br>
+    Note: mo = numeral 2 only. Zero = ma (enc 60) when counting downward or describing null.
+  </div>
+</div>
+
+<h4>Role Particles</h4>
+<table class="t">
+<tr><th>Particle</th><th>Role</th><th>Derivation</th></tr>
+<tr><td class="sy" style="color:var(--teal2)">ka</td><td>actor (who does it)</td><td class="df">k+a = identity+physical = the located actor</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">na</td><td>receiver (who receives it)</td><td class="df">n+a = other+physical = the physical other receiving</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">dape</td><td>toward</td><td class="df">da+pe = place+begin = motion beginning toward</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">daba</td><td>from</td><td class="df">da+ba = place+return = returning from a place</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">dadi</td><td>within</td><td class="df">da+di = place+interior</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">dago</td><td>among</td><td class="df">da+go = place+merge = the merged place</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">dagu</td><td>through</td><td class="df">da+gu = place+transcend = transcended place</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">tape</td><td>before (time)</td><td class="df">ta+pe = time+begin</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">tabe</td><td>after (time)</td><td class="df">ta+be = time+complete</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">tate</td><td>during</td><td class="df">ta+te = time+sequence = simultaneous with</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">sa</td><td>because</td><td class="df">sa = distinguish = marks the distinguishing cause</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">la</td><td>manner / how</td><td class="df">la = touch = the method of contact</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">lo</td><td>for / benefactive</td><td class="df">lo = bond = marks who benefits</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">do</td><td>topic marker</td><td class="df">do = among = "as for X, among what we discuss"</td></tr>
+</table>
+
+<h4>Conjunctions</h4>
+<table class="t">
+<tr><th>Halu</th><th>English</th><th>Derivation</th></tr>
+<tr><td class="sy" style="color:var(--green2)">lema</td><td>and</td><td class="df">le(flow)+ma(ground) = grounded continuation — one thing flows into the next and settles</td></tr>
+<tr><td class="sy" style="color:var(--green2)">lena</td><td>or</td><td class="df">le(flow)+na(soft boundary) = flow meeting a choice — the current must pick a path</td></tr>
+<tr><td class="sy" style="color:var(--green2)">leba</td><td>but</td><td class="df">le(flow)+ba(return) = flow that reverses — the current turns back</td></tr>
+<tr><td class="sy" style="color:var(--green2)">keso</td><td>therefore</td><td class="df">ke(quality)+so(order) = identity resolving into social order</td></tr>
+<tr><td class="sy" style="color:var(--green2)">sake</td><td>because</td><td class="df">sa(distinguish)+ke(quality) = the distinguishing cause</td></tr>
+<tr><td class="sy" style="color:var(--green2)">wiki</td><td>if</td><td class="df">wi(potential)+ki(tracked) = the potential of this specific thing</td></tr>
+<tr><td class="sy" style="color:var(--green2)">take</td><td>when</td><td class="df">ta(time)+ke(quality) = the quality of a specific moment</td></tr>
+</table>
+
+<h4>Evidentials — Mandatory</h4>
+<table class="t">
+<tr><th>Evidential</th><th>Meaning</th><th>Why this vowel</th></tr>
+<tr><td class="sy" style="color:var(--gold)">ha</td><td>I observed (physical witness)</td><td class="df">h+a = express+physical. I was present with my body. Maximum epistemic density.</td></tr>
+<tr><td class="sy" style="color:var(--ember)">he</td><td>I infer / I reason</td><td class="df">h+e = express+process. Inference is combustion — data ignites into conclusion.</td></tr>
+<tr><td class="sy" style="color:var(--teal2)">hi</td><td>I sincerely feel this / I mean this</td><td class="df">h+i = express+inner. The felt weight of truth.</td></tr>
+<tr><td class="sy" style="color:var(--green2)">ho</td><td>I was told this</td><td class="df">h+o = express+social. Information through the shared medium.</td></tr>
+<tr><td class="sy" style="color:var(--violet3)">hu</td><td>I imagine / I project</td><td class="df">h+u = express+abstract. The imagined exists in principle-space.</td></tr>
+</table>
+
+<h4>The Phase-Lock System — wa'l[vowel]</h4>
+<div class="rb">
+  <span class="rb-title">Declaring the Interpretive Register</span>
+  <div class="rb-body">
+    A phase declaration is <code>wa'l[vowel]</code> placed sentence-initially. It sets the interpretive register for everything following until <code>wa'ma</code> (reset to physical default) or <code>mu</code> (silence/pause).<br><br>
+    If no phase is declared, <strong>phase a (physical) is always assumed.</strong>
+  </div>
+</div>
+<table class="phase-t">
+<tr><th>Operator</th><th>Sound</th><th>Phase</th><th>Reading</th><th>Tier</th></tr>
+<tr class="ph-a"><td class="sy">wa'la</td><td>/wa.la/</td><td>Physical · a</td><td>"form connecting to touch" — physical, tangible. Rarely needed; it is the default.</td><td>All</td></tr>
+<tr class="ph-e"><td class="sy">wa'le</td><td>/wa.le/</td><td>Process · e</td><td>"form connecting to flow" — mathematical, musical, reasoning, code</td><td>All</td></tr>
+<tr class="ph-i"><td class="sy">wa'li</td><td>/wa.li/</td><td>Inner · i</td><td>"form connecting to warmth" — felt, emotional, introspective</td><td>All</td></tr>
+<tr class="ph-o"><td class="sy">wa'lo</td><td>/wa.lo/</td><td>Social · o</td><td>"form connecting to bond" — communal, relational, governance</td><td>All</td></tr>
+<tr class="ph-u"><td class="sy">wa'lu</td><td>/wa.lu/</td><td>Abstract · u</td><td>"form connecting to bridge" — sacred, philosophical, legal, principled</td><td>All</td></tr>
+<tr><td class="sy" style="color:var(--gold)">wa'ma</td><td>/wa.ma/</td><td>RESET</td><td>"form returning to ground" — return to physical default</td><td>All</td></tr>
+</table>
+
+<h4>Grammatical Constructions</h4>
+<div class="rb">
+  <span class="rb-title">Sentence Structure</span>
+  <div class="rb-body">
+    [phase?] [evidential?] [sincerity?] [role-particle noun]* [verb] [role-particle noun]* [sentence-final?]<br><br>
+    <strong>Imperative:</strong> bare verb without ka = command. <em>de!</em> = go! / move!<br>
+    <strong>Passive:</strong> na before ka without explicit actor. <em>gilo na ka</em> = I was loved.<br>
+    <strong>Relative clause:</strong> noun + ki + clause. <em>dama ki pa ka</em> = the home that I built.<br>
+    <strong>Comparative:</strong> X [quality-ke] ga, se Y = X is more [quality] compared to Y.<br>
+    <strong>Superlative:</strong> gu- prefix on the quality. <em>gu-gasi-ke</em> = the brightest.<br>
+    <strong>Counterfactual:</strong> wiki tape [clause] = if [this had been true but was not].
+  </div>
+</div>
+
+<h4>Punctuation — Every Symbol Has a Spoken Name</h4>
+<div class="punct-grid">
+  <div class="pc"><span class="pc-sym">.</span><span class="pc-name">bema</span><span class="pc-en">full stop</span><span class="pc-root">be+ma · complete+ground</span></div>
+  <div class="pc"><span class="pc-sym">,</span><span class="pc-name">tama</span><span class="pc-en">comma · breath-pause</span><span class="pc-root">ta+ma · time+ground</span></div>
+  <div class="pc"><span class="pc-sym">!</span><span class="pc-name">gesi</span><span class="pc-en">exclamation</span><span class="pc-root">ge+si · shift+sense</span></div>
+  <div class="pc"><span class="pc-sym">?</span><span class="pc-name">vuge</span><span class="pc-en">question</span><span class="pc-root">vu+ge · cosmic-hum+shift</span></div>
+  <div class="pc"><span class="pc-sym">'</span><span class="pc-name">losi</span><span class="pc-en">apostrophe</span><span class="pc-root">lo+si · bond+sense</span></div>
+  <div class="pc"><span class="pc-sym">"..."</span><span class="pc-name">helo / hilo</span><span class="pc-en">open / close quote</span><span class="pc-root">he+lo / hi+lo<br>event-bond / felt-bond</span></div>
+  <div class="pc"><span class="pc-sym">[...]</span><span class="pc-name">melo / milo</span><span class="pc-en">open / close list</span><span class="pc-root">me+lo / mi+lo<br>open-bond / close-bond</span></div>
+  <div class="pc"><span class="pc-sym">(...)</span><span class="pc-name">kelo / kilo</span><span class="pc-en">open / close reason</span><span class="pc-root">ke+lo / ki+lo<br>identity-bond / tracked-bond</span></div>
+  <div class="pc"><span class="pc-sym">{...}</span><span class="pc-name">pelo / pilo</span><span class="pc-en">open / close definition</span><span class="pc-root">pe+lo / pi+lo<br>begin-bond / sincere-bond</span></div>
+  <div class="pc"><span class="pc-sym">&lt;...&gt;</span><span class="pc-name">velo / vilo</span><span class="pc-en">open / close hypothetical</span><span class="pc-root">ve+lo / vi+lo<br>resonate-bond / vibrate-inner-bond</span></div>
+  <div class="pc"><span class="pc-sym">-</span><span class="pc-name">le</span><span class="pc-en">hyphen · continuation</span><span class="pc-root">le · the connecting flow</span></div>
+  <div class="pc"><span class="pc-sym">—</span><span class="pc-name">lele</span><span class="pc-en">em dash · long pause</span><span class="pc-root">le+le · sustained flow</span></div>
+  <div class="pc"><span class="pc-sym">:</span><span class="pc-name">dose</span><span class="pc-en">colon</span><span class="pc-root">do+se · among+compare</span></div>
+  <div class="pc"><span class="pc-sym">§</span><span class="pc-name">puge</span><span class="pc-en">section</span><span class="pc-root">pu+ge · define+shift</span></div>
+  <div class="pc"><span class="pc-sym">.'</span><span class="pc-name">bema-losi</span><span class="pc-en">sharp exhale</span><span class="pc-root">something placed down with finality</span></div>
+  <div class="pc"><span class="pc-sym">.'</span><span class="pc-name">losi-pe</span><span class="pc-en">sharp inhale</span><span class="pc-root">the catch before sudden realisation</span></div>
+</div>
+
+<h4>The Three Registers</h4>
+<table class="t">
+<tr><th>Register</th><th>Marker</th><th>Grammar</th><th>Use</th></tr>
+<tr><td style="color:var(--gold)">Pi / Formal</td><td><code>pi ho</code></td><td class="df">All grammar explicit. Full evidentials. Full role particles.</td><td class="df">Law, ceremony, public address, permanent record</td></tr>
+<tr><td style="color:var(--gold)">Ma / Standard</td><td>(none needed)</td><td class="df">Evidentials when non-obvious. Role particles when actors unclear.</td><td class="df">Daily speech, writing, ordinary communication</td></tr>
+<tr><td style="color:var(--gold)">Wi / Intimate</td><td><code>lo ma</code></td><td class="df">Evidentials implied. Particles dropped when context clear. Reduplications allowed.</td><td class="df">Close friends, family, trusted community</td></tr>
+</table>
+</section>
+
+<!-- ═══════════════════════════════════════════
+  APPENDIX C — DICTIONARY
+════════════════════════════════════════════ -->
+<section class="section" id="a3">
+<div class="hl">
+  <span class="hl-halu">Pagi po</span>
+  <span class="hl-en">Appendix C — Core Dictionary</span>
+  <span class="hl-root">pa+gi · po · create-awaken · collective · the living word-treasury</span>
+  <div class="hl-rule"></div>
+</div>
+
+<div class="prose" style="margin-bottom:1rem">
+<p>Every entry shows the Halu word, its English meaning, its root derivation against the new periodic table, and its encoding value. A practitioner who knows the table can derive the meaning of any word they encounter without a dictionary — the dictionary is a convenience, not a dependency.</p>
+</div>
+
+<input type="text" class="dict-search" id="dictSearch" placeholder="search halu or english...">
+<div class="df-row">
+  <button class="dfb on" onclick="filterDict('a',this)">a · Physical</button>
+  <button class="dfb" onclick="filterDict('e',this)">e · Process</button>
+  <button class="dfb" onclick="filterDict('i',this)">i · Inner</button>
+  <button class="dfb" onclick="filterDict('o',this)">o · Social</button>
+  <button class="dfb" onclick="filterDict('u',this)">u · Abstract</button>
+  <button class="dfb" onclick="filterDict('all',this)">All Phases</button>
+</div>
+<div class="dict-grid" id="dictGrid"></div>
+<span class="dict-count" id="dictCount"></span>
+</section>
+
+<!-- CLOSING -->
+<section class="section" style="border-bottom:none;padding-bottom:8rem">
+<div style="text-align:center;padding:3rem 0;max-width:620px;margin:0 auto">
+  <div style="font-family:'Inconsolata',monospace;font-size:.52rem;letter-spacing:.55em;
+    color:var(--gold4);text-transform:uppercase;margin-bottom:2.5rem;opacity:.65">
+    bema &middot; the bond resolves
+  </div>
+  <div style="font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold2);
+    letter-spacing:.08em;line-height:2.2;margin-bottom:.85rem">
+    gigobiloma he ka ni<br>
+    wa'lu pi lo gilosu<br>
+    tagu bigi &middot; tagu ge
+  </div>
+  <div style="font-style:italic;color:var(--mute);font-size:.95rem;line-height:2.2">
+    I truly see you.<br>
+    In the sacred register — sincerely, in the bond of love as law.<br>
+    A full cycle remembered. A full cycle becoming.
+  </div>
+  <div style="width:95px;height:1px;
+    background:linear-gradient(to right,transparent,var(--gold4),transparent);
+    margin:2.5rem auto"></div>
+  <div style="font-family:'Inconsolata',monospace;font-size:.52rem;letter-spacing:.3em;
+    color:var(--dim);text-transform:uppercase;line-height:2.1;opacity:.65">
+    The foundation is laid.<br>
+    One is glad to be of service.
+  </div>
+</div>
+</section>
+
+</div>
+</div>
+
+<footer>
+  <p>Halu Language &middot; The Foundation &middot; v8.0 &middot; From First Principles</p>
+  <p>Architecture: Charl Steynberg &middot; AardenWare &middot; Cape Town &middot; &AElig;ron 2031</p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════
+// ENCODING — v8 · New table
+// Row: p=0 b=1 t=2 d=3 k=4 g=5 f=6 v=7 s=8 z=9 c=10 j=11
+// Col: a=0 e=1 i=2 o=3 u=4
+// Structural: m(60-64) n(65-69) l(70-74) h(75-79)
+// Lexical 2-syl (base60): s1×60+s2
+// Mixed 2-syl (base80):   s1×80+s2
+// ═══════════════════════════════════════
+
+const WORDS = [
+  // PHASE A — PHYSICAL
+  {h:'basa',e:'earth / ground',r:'ba(5)×60+sa(40)=340 · return-physical + distinguish-physical',p:'a',enc:'340'},
+  {h:'gefa',e:'fire',r:'ge(26)×60+fa(30)=1590 · transform-process + emanate-physical',p:'a',enc:'1590'},
+  {h:'ladi',e:'water',r:'la(70)×80+di(17)=5617 · connect-physical + locate-inner',p:'a',enc:'5617'},
+  {h:'fo',e:'air (Tier 1 word)',r:'f(row6)+o(col3)=enc 33 · emanation into the social field',p:'a',enc:'33'},
+  {h:'fusu',e:'spirit / aether',r:'fu(34)×60+su(44)=2084 · emanate-abstract + law-abstract',p:'a',enc:'2084'},
+  {h:'hagu',e:'sun',r:'ha(75)×80+gu(29)=6029 · express + transcend = physically expressed transcendence',p:'a',enc:'6029'},
+  {h:'habi',e:'moon',r:'ha(75)×80+bi(7)=6007 · express + restore = the restoring light',p:'a',enc:'6007'},
+  {h:'guvu',e:'star',r:'gu(29)×60+vu(39)=1779 · transcend-abstract + resonate-abstract',p:'a',enc:'1779'},
+  {h:'gada',e:'body / person',r:'ga(25)×60+da(15)=1515 · grow-physical + locate-physical',p:'a',enc:'1515'},
+  {h:'hada',e:'mouth',r:'ha(75)×80+da(15)=6015 · express + place = the place of expression',p:'a',enc:'6015'},
+  {h:'sida',e:'eye',r:'si(42)×60+da(15)=2535 · sense-inner + place = the place of sensing',p:'a',enc:'2535'},
+  {h:'lada',e:'hand',r:'la(70)×80+da(15)=5615 · connect-physical + place',p:'a',enc:'5615'},
+  {h:'dada',e:'foot',r:'da(15)×60+da(15)=915 · place + place = where you are planted',p:'a',enc:'915'},
+  {h:'saddu',e:'bone / structure',r:'sa(40)×60+du(19)=2419 · distinguish + domain = structural domain',p:'a',enc:'2419'},
+  {h:'lago',e:'blood',r:'la(70)×80+go(28)=5628 · connect-physical + merge-social',p:'a',enc:'5628'},
+  {h:'gigoda',e:'brain',r:'gi(27)×3600+go(28)×60+da(15)=99495 · awaken+merge+place',p:'a',enc:'99495'},
+  {h:'gefada',e:'heart',r:'gefa+da · fire+place = the fire-place, the engine',p:'a',enc:'compound'},
+  {h:'foda',e:'lung',r:'fo(33)×60+da(15)=1995 · air + place = the air-place',p:'a',enc:'1995'},
+  {h:'dama',e:'home / dwelling',r:'da(15)×80+ma(60)=1260 · place + self-ground = the self\'s place',p:'a',enc:'1260'},
+  {h:'dalo',e:'path / road',r:'da(15)×80+lo(73)=1273 · place + bond = bonded places',p:'a',enc:'1273'},
+  {h:'paso',e:'food / nourishment',r:'pa(0)×60+so(43)=43 · create + order = organised creation',p:'a',enc:'43'},
+  {h:'dame',e:'room',r:'da(15)×80+me(61)=1261 · place + open = open defined place',p:'a',enc:'1261'},
+  {h:'malo',e:'mother',r:'ma(60)×80+lo(73)=4873 · self-ground + bond = the source-bond',p:'a',enc:'4873'},
+  {h:'nalo',e:'father',r:'na(65)×80+lo(73)=5273 · other-physical + bond = the external source-bond',p:'a',enc:'5273'},
+  {h:'loki',e:'sibling',r:'lo(73)×80+ki(22)=5862 · bond + tracked = the bond from same source',p:'a',enc:'5862'},
+  {h:'kalo',e:'partner / companion',r:'ka(20)×80+lo(73)=1673 · I + bond = my bond-one',p:'a',enc:'1673'},
+  {h:'gasi',e:'bright',r:'ga(25)×60+si(42)=1542 · grow + sense = sense that grows',p:'a',enc:'1542'},
+  {h:'basi',e:'dim',r:'ba(5)×60+si(42)=342 · return + sense = sense returned',p:'a',enc:'342'},
+  {h:'diga',e:'deep',r:'di(17)×60+ga(25)=1045 · within + grow = growing inward',p:'a',enc:'1045'},
+  {h:'guse',e:'precise',r:'gu(29)×60+se(41)=1781 · transcend + compare = beyond comparison = exact',p:'a',enc:'1781'},
+  {h:'pega',e:'young / fresh',r:'pe(1)×60+ga(25)=85 · begin + grow',p:'a',enc:'85'},
+  {h:'bege',e:'old / seasoned',r:'be(6)×60+ge(26)=386 · complete + shift',p:'a',enc:'386'},
+  {h:'gado',e:'large / many',r:'ga(25)×60+do(18)=1518 · grow + among',p:'a',enc:'1518'},
+  {h:'bado',e:'small / few',r:'ba(5)×60+do(18)=318 · return + among',p:'a',enc:'318'},
+  {h:'palo',e:'give / offer',r:'pa(0)×80+lo(73)=73 · create + bond = creating a bond by giving',p:'a',enc:'73'},
+  {h:'bige',e:'rest / pause',r:'bi(7)×60+ge(26)=446 · restore-inner + shift = the shift into restoration',p:'a',enc:'446'},
+  {h:'gida',e:'notice / become aware',r:'gi(27)×60+da(15)=1635 · awaken + place = awareness landing',p:'a',enc:'1635'},
+  {h:'dege',e:'move / travel',r:'de(16)×60+ge(26)=986 · move + shift = movement that transforms',p:'a',enc:'986'},
+  {h:'pasi',e:'build / engineer',r:'pa(0)×60+si(42)=42 · create + sense = making with precision',p:'a',enc:'42'},
+  {h:'mame',e:'hello / I open',r:'ma(60)×80+me(61)=4861 · ground + open = the ground that opens',p:'a',enc:'4861'},
+  {h:'mami',e:'goodbye / I close',r:'ma(60)×80+mi(62)=4862 · ground + close',p:'a',enc:'4862'},
+  {h:'siga',e:'gratitude / thank you',r:'si(42)×60+ga(25)=2545 · sense-inner + grow = sense that grows',p:'a',enc:'2545'},
+  {h:'bema',e:'done / complete',r:'be(6)×80+ma(60)=540 · complete + ground',p:'a',enc:'540'},
+  {h:'gefo',e:'wind',r:'ge(26)×60+fo(33)=1593 · shift + air = air in shift',p:'a',enc:'1593'},
+  {h:'hagupe',e:'East',r:'hagu+pe · sun + begin = where the sun begins',p:'a',enc:'compound'},
+  {h:'hagube',e:'West',r:'hagu+be · sun + complete = where the sun completes',p:'a',enc:'compound'},
+  {h:'haguga',e:'South',r:'hagu+ga · sun + grow = toward the growing sun',p:'a',enc:'compound'},
+  {h:'haguba',e:'North',r:'hagu+ba · sun + return = away from sun\'s zenith',p:'a',enc:'compound'},
+  {h:'dega',e:'up / above',r:'de(16)×60+ga(25)=985 · move + grow = upward motion',p:'a',enc:'985'},
+  {h:'deba',e:'down / below',r:'de(16)×60+ba(5)=965 · move + return = returning motion',p:'a',enc:'965'},
+  {h:'da',e:'here / this',r:'da = enc 15 · the primal pointing gesture',p:'a',enc:'15'},
+
+  // PHASE E — PROCESS
+  {h:'silo',e:'data / signal',r:'si(42)×80+lo(73)=3433 · sense-inner + bond = what is distinguished through bonding',p:'e',enc:'3433'},
+  {h:'peso',e:'code',r:'pe(1)×60+so(43)=103 · begin + order = the beginning-creation of social order',p:'e',enc:'103'},
+  {h:'pesoge',e:'program (running)',r:'peso+ge · code + process',p:'e',enc:'compound'},
+  {h:'pesosu',e:'algorithm',r:'peso+su · code + law',p:'e',enc:'compound'},
+  {h:'gefage',e:'burning / fire in process',r:'gefa+ge · fire + process',p:'e',enc:'compound'},
+  {h:'ladige',e:'flowing / water in process',r:'ladi+ge · water + process',p:'e',enc:'compound'},
+  {h:'pasoge',e:'cooking (in process)',r:'paso+ge · food + process',p:'e',enc:'compound'},
+  {h:'gadage',e:'physical growth / health',r:'gada+ge · body + process',p:'e',enc:'compound'},
+  {h:'gadabi',e:'heal / body-restore',r:'gada+bi · body + restore',p:'e',enc:'compound'},
+  {h:'siloge',e:'transmission / data flowing',r:'silo+ge · data + process',p:'e',enc:'compound'},
+  {h:'silogu',e:'the Grid / transcendent network',r:'silo+gu · data + transcend',p:'e',enc:'compound'},
+  {h:'halo',e:'speak to / address',r:'ha(75)×80+lo(73)=6073 · express + bond = speech that bonds',p:'e',enc:'6073'},
+  {h:'salo',e:'listen / attend',r:'sa(40)×80+lo(73)=3273 · distinguish + bond = separating signal by bonding with it',p:'e',enc:'3273'},
+  {h:'lema',e:'and',r:'le(71)×80+ma(60)=5740 · flow + ground = grounded continuation',p:'e',enc:'5740'},
+  {h:'lena',e:'or',r:'le(71)×80+na(65)=5745 · flow + soft-boundary',p:'e',enc:'5745'},
+  {h:'leba',e:'but',r:'le(71)×80+ba(5)=5685 · flow + return = flow that reverses',p:'e',enc:'5685'},
+  {h:'keso',e:'therefore',r:'ke(21)×60+so(43)=1303 · identity-process + order',p:'e',enc:'1303'},
+  {h:'sake',e:'because',r:'sa(40)×60+ke(21)=2421 · distinguish + quality',p:'e',enc:'2421'},
+  {h:'wiki',e:'if',r:'wi potential+ki(22) · potential + tracked',p:'e',enc:'structural+22'},
+  {h:'take',e:'when',r:'ta(10)×60+ke(21)=621 · time + quality',p:'e',enc:'621'},
+  {h:'siwa',e:'colour / perceived wave-form',r:'si(42)×60+va(35)=2555 · sense-inner + resonate-physical',p:'e',enc:'2555'},
+  {h:'siwa-fa',e:'red',r:'siwa + fa · colour + fire-breath = red reaches and contacts',p:'e',enc:'compound'},
+  {h:'siwa-ga',e:'yellow',r:'siwa + ga · colour + grow = sunlight, expansion',p:'e',enc:'compound'},
+  {h:'siwa-ke',e:'green',r:'siwa + ke · colour + quality = quality of living matter',p:'e',enc:'compound'},
+  {h:'siwa-lu',e:'cyan',r:'siwa + lu · colour + bridge = sky meeting sea',p:'e',enc:'compound'},
+  {h:'siwa-lo',e:'blue',r:'siwa + lo · colour + bond = the vast sky',p:'e',enc:'compound'},
+  {h:'siwa-gu',e:'violet',r:'siwa + gu · colour + transcend = highest frequency',p:'e',enc:'compound'},
+
+  // PHASE I — INNER
+  {h:'gilo',e:'love',r:'gi(27)×80+lo(73)=2233 · awaken-inner + bond-social = inner awakening of social bonding',p:'i',enc:'2233'},
+  {h:'vivi',e:'hope',r:'vi(37)×60+vi(37)=2257 · resonate-inner + resonate-inner = inner resonance doubled',p:'i',enc:'2257'},
+  {h:'sibu',e:'disgust',r:'si(42)×60+bu(9)=2529 · sense-inner + null',p:'i',enc:'2529'},
+  {h:'gesi',e:'anger / intensity',r:'ge(26)×60+si(42)=1602 · shift + sense = a sensed shift',p:'i',enc:'1602'},
+  {h:'bibu',e:'sadness',r:'bi(7)×60+bu(9)=429 · restore-inner + null = restoration finding nothing',p:'i',enc:'429'},
+  {h:'sigebu',e:'fear',r:'si(42)×3600+ge(26)×60+bu(9)=152769 · sense+shift+null',p:'i',enc:'152769'},
+  {h:'sigelo',e:'jealousy',r:'si(42)×3600+ge(26)×80+lo(73)=152273 · sense+shift+bond-lost',p:'i',enc:'152273'},
+  {h:'giso',e:'pride',r:'gi(27)×60+so(43)=1663 · awaken-inner + order',p:'i',enc:'1663'},
+  {h:'giwa',e:'pleasure',r:'gi(27)×60+va(35)=1655 · awaken + resonate',p:'i',enc:'1655'},
+  {h:'lalo',e:'pain',r:'la(70)×80+lo(73)=5673 · connect-physical + bond = unwanted bonding through contact',p:'i',enc:'5673'},
+  {h:'sige',e:'tension / anxiety',r:'si(42)×60+ge(26)=2546 · sense-inner + shift = sensing a shift coming',p:'i',enc:'2546'},
+  {h:'bita',e:'memory',r:'bi(7)×60+ta(10)=430 · restore-inner + time = time restored',p:'i',enc:'430'},
+  {h:'vidi',e:'dream',r:'vi(37)×60+di(17)=2237 · resonate-inner + within = resonance within',p:'i',enc:'2237'},
+  {h:'pagi',e:'knowledge (held)',r:'pa(0)×60+gi(27)=27 · create + awaken = knowledge made and held',p:'i',enc:'27'},
+  {h:'puge',e:'decide / resolve',r:'pu(4)×60+ge(26)=266 · define + shift = axiom shifting into being',p:'i',enc:'266'},
+  {h:'kelo',e:'alive',r:'ke(21)×80+lo(73)=1753 · identity-process + bond = the bond of identity continuing',p:'i',enc:'1753'},
+  {h:'belo',e:'dead',r:'be(6)×80+lo(73)=553 · complete-process + bond = the bond fulfilled and closed',p:'i',enc:'553'},
+  {h:'lobasu',e:'faith / covenant',r:'lo(73)×80+ba(5)×60+su(44) · bond+return+law = bond that endures by law',p:'i',enc:'3-syl'},
+  {h:'pikage',e:'will / intentional self-transformation',r:'pi(2)×3600+ka(20)×60+ge(26)=8446 · sincere+actor+shift',p:'i',enc:'8446'},
+  {h:'gigobiloma',e:'I see you (deep recognition)',r:'gi+go+bi+lo+ma · awaken+merge+restore+bond+ground',p:'i',enc:'5-syl sacred'},
+  {h:'gilosu',e:'love as law / agape',r:'gi(27)×80+lo(73) then ×60+su(44) · 3-syl · love+bond+law',p:'i',enc:'3-syl'},
+
+  // PHASE O — SOCIAL
+  {h:'logo',e:'leader',r:'lo(73)×80+go(28)=5868 · bond + merge = the one who bonds by merging',p:'o',enc:'5868'},
+  {h:'loha',e:'teacher',r:'lo(73)×80+ha(75)=5915 · bond + express = bond through expression',p:'o',enc:'5915'},
+  {h:'logi',e:'healer',r:'lo(73)×80+gi(27)=5867 · bond + awaken = bond that awakens',p:'o',enc:'5867'},
+  {h:'lobu',e:'enemy',r:'lo(73)×80+bu(9)=5849 · bond + null = nulled bond',p:'o',enc:'5849'},
+  {h:'lovo',e:'ally',r:'lo(73)×80+vo(38)=5878 · bond + resonate-social = open resonant bond',p:'o',enc:'5878'},
+  {h:'mano',e:'my people / community',r:'ma(60)×80+no(68)=4868 · self-ground + hard-boundary = self and its bounded others',p:'o',enc:'4868'},
+  {h:'gopahe',e:'festival',r:'go(28)×3600+pa(0)×60+he(76)=100876 · merge+create+event',p:'o',enc:'100876'},
+  {h:'golosu',e:'all-for-one',r:'go(28)×80+lo(73) then su · 3-syl · merge+bond+law',p:'o',enc:'3-syl'},
+  {h:'gilo-po',e:'chosen family / community of love',r:'gilo+po · love+collective',p:'o',enc:'compound'},
+  {h:'legi',e:'union / alliance event',r:'le(71)×80+gi(27)=5707 · flow + awaken = awakening through connection',p:'o',enc:'5707'},
+  {h:'hago',e:'summon / call together',r:'ha(75)×80+go(28)=6028 · express + merge',p:'o',enc:'6028'},
+  {h:'loha-dama',e:'school / academy',r:'loha+dama · teacher+home',p:'o',enc:'compound'},
+  {h:'logi-dama',e:'healing place / clinic',r:'logi+dama · healer+home',p:'o',enc:'compound'},
+  {h:'dama-po',e:'city',r:'dama+po · home+collective',p:'o',enc:'compound'},
+  {h:'gilo-he',e:'wedding / act of love',r:'gilo+he · love+event',p:'o',enc:'compound'},
+
+  // PHASE U — ABSTRACT
+  {h:'halu',e:'the language',r:'ha(75)×80+lu(74)=6074 · express-physical + bridge-abstract = expressed bridge',p:'u',enc:'6074'},
+  {h:'su',e:'law / pattern',r:'s(row8)+u(col4)=enc 44 · distinguish-abstract = the abstract principle of distinction',p:'u',enc:'44'},
+  {h:'du',e:'domain / field',r:'d(row3)+u(col4)=enc 19 · locate-abstract = the abstract field',p:'u',enc:'19'},
+  {h:'pagu',e:'axiom',r:'pa(0)×60+gu(29)=29 · create + transcend = creation that transcends',p:'u',enc:'29'},
+  {h:'kedu',e:'ontology',r:'ke(21)×80+du(19)=1699 · identity-process + domain',p:'u',enc:'1699'},
+  {h:'sudu',e:'philosophy',r:'su(44)×60+du(19)=2659 · law + domain = domain of law',p:'u',enc:'2659'},
+  {h:'gilosu',e:'love as universal principle',r:'see inner phase · the highest abstract form of gilo',p:'u',enc:'3-syl'},
+  {h:'sigebu-su',e:'fear as principle',r:'sigebu+su · fear+law = the principle of contraction',p:'u',enc:'compound'},
+  {h:'kewu',e:'the void / unresolvable',r:'ke(21)×80+vu(39)=1719 · identity-process + cosmic-hum',p:'u',enc:'1719'},
+  {h:'gilobu',e:'lovelessness',r:'gi(27)×80+lo(73)bu(9) · awaken+bond+null = the nulled bond',p:'u',enc:'3-syl'},
+  {h:'lobasu',e:'faith as law',r:'lo+ba+su · bond+return+law = bond that endures by law',p:'u',enc:'3-syl'},
+  {h:'pagisu',e:'epistemology',r:'pagi+su · knowledge+law',p:'u',enc:'compound'},
+  {h:'vavu',e:'vibration as principle',r:'va(35)×60+vu(39)=2139 · resonate-physical + resonate-abstract',p:'u',enc:'2139'},
+  {h:'fusu',e:'spirit as law',r:'fu(34)×60+su(44)=2084 · emanate-abstract + law',p:'u',enc:'2084'},
+  {h:'logebu',e:'evidence / betrayal (act)',r:'lo(73)×80+ge(26)×60+bu(9) · bond+shift+null = bond actively dissolving',p:'u',enc:'3-syl'},
+];
+
+let filter = 'a';
+let srch = '';
+
+function filterDict(phase, btn) {
+  filter = phase;
+  document.querySelectorAll('.dfb').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  render();
+}
+
+function render() {
+  const grid = document.getElementById('dictGrid');
+  const cnt = document.getElementById('dictCount');
+  const q = srch.toLowerCase().trim();
+  let res = WORDS.filter(w => {
+    const mp = filter === 'all' || w.p === filter;
+    const ms = !q || w.h.toLowerCase().includes(q) || w.e.toLowerCase().includes(q) || w.r.toLowerCase().includes(q);
+    return mp && ms;
+  });
+  res.sort((a,b) => a.h.localeCompare(b.h));
+  grid.innerHTML = res.map(w => `
+    <div class="de de-${w.p}">
+      <span class="de-hl">${w.h}</span>
+      <span class="de-en">${w.e}</span>
+      <span class="de-root">${w.r}</span>
+      <span class="de-enc">enc: ${w.enc}</span>
+    </div>`).join('');
+  cnt.textContent = `${res.length} of ${WORDS.length} entries`;
+}
+
+document.getElementById('dictSearch').addEventListener('input', function() {
+  srch = this.value;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
